@@ -4,7 +4,7 @@
  <title>Cinode dev blog</title>
  <link href="http://cinode.github.io/atom.xml" rel="self"/>
  <link href="http://cinode.github.io"/>
- <updated>2016-06-18T20:25:30+02:00</updated>
+ <updated>2016-06-18T20:28:12+02:00</updated>
  <id>http://cinode.github.io</id>
  <author>
    <name>BYO</name>
@@ -219,7 +219,7 @@ and I’ll leave it for the next blog post.&lt;/p&gt;
 &lt;p&gt;Cinode is an experimental protect, something like a sandbox for ideas.
 It does/will utilize some crypto technologies to materialize new kind of
 application environment. As a result of this project, I’d like to come
-up with a&amp;amp;npsp;pretty good idea on how we could create new set of apps built on
+up with a pretty good idea on how we could create new set of apps built on
 top of solid crypto base: secure by default but still relatively easy to create.&lt;/p&gt;
 
 &lt;p&gt;This solid crypto base is the major goal here.&lt;/p&gt;

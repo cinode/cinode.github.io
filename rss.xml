@@ -5,8 +5,8 @@
         <description>Cinode dev blog - BYO</description>
         <link>http://cinode.github.io</link>
         <atom:link href="http://cinode.github.io/rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sat, 18 Jun 2016 20:25:30 +0200</lastBuildDate>
-        <pubDate>Sat, 18 Jun 2016 20:25:30 +0200</pubDate>
+        <lastBuildDate>Sat, 18 Jun 2016 20:28:12 +0200</lastBuildDate>
+        <pubDate>Sat, 18 Jun 2016 20:28:12 +0200</pubDate>
         <ttl>60</ttl>
 
 
@@ -214,7 +214,7 @@ and I’ll leave it for the next blog post.&lt;/p&gt;
 &lt;p&gt;Cinode is an experimental protect, something like a sandbox for ideas.
 It does/will utilize some crypto technologies to materialize new kind of
 application environment. As a result of this project, I’d like to come
-up with a&amp;amp;npsp;pretty good idea on how we could create new set of apps built on
+up with a pretty good idea on how we could create new set of apps built on
 top of solid crypto base: secure by default but still relatively easy to create.&lt;/p&gt;
 
 &lt;p&gt;This solid crypto base is the major goal here.&lt;/p&gt;
