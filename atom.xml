@@ -4,13 +4,209 @@
  <title>Cinode dev blog</title>
  <link href="http://cinode.github.io/atom.xml" rel="self"/>
  <link href="http://cinode.github.io"/>
- <updated>2016-06-08T23:09:14+02:00</updated>
+ <updated>2016-06-18T20:14:21+02:00</updated>
  <id>http://cinode.github.io</id>
  <author>
    <name>BYO</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Static base</title>
+   <link href="http://cinode.github.io/2016/06/11/static-base"/>
+   <updated>2016-06-11T00:00:00+02:00</updated>
+   <id>http://cinode.github.io/2016/06/11/static-base</id>
+   <content type="html">
+&lt;h1 id=&quot;lets-talk-about-blobs&quot;&gt;Let’s talk about blobs&lt;/h1&gt;
+
+&lt;p&gt;Computers understand bits, bits form bytes. Bytes can be ordered into sequence:
+we end up having blocks of data, blobs. We store them in various places. Running
+program will need some data inside memory, other part of it will be saved on disk.
+Some data will be downloaded from servers, CPU will keep some blobs inside
+it’s cache. We can put dozens of examples here, but what this shows is that
+being so fundamental in computer science, proper data blob management is the key
+to good application environment.&lt;/p&gt;
+
+&lt;p&gt;We can’t access data without naming blobs in some way. That’s why come up with
+vrious kinds of addressing. Address could be an URI, file name or just an
+address in memory.&lt;/p&gt;
+
+&lt;p&gt;There’s one special kind of addressing where we generate the name of blob from
+the data itself, commonly used in
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Content-addressable_storage&quot;&gt;Content-Addressable Storages&lt;/a&gt;
+(CAS).
+How do we generate the name of object? Well, we usually take some
+cryptographically secure hash function, hash the contents of a blob and the
+result of the hash function is blob’s name.&lt;/p&gt;
+
+&lt;p&gt;What would be properties of such hash-based naming scheme?
+Let’s try to figure our few:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Two blobs with equal contents will have the same name, that’s how hash
+functions work.&lt;/li&gt;
+  &lt;li&gt;If two blobs have same name, they almost certainly
+have the same contents. Probability of a different situation is equal to
+hash function collision, so
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Collision_resistance&quot;&gt;must be negligible&lt;/a&gt;
+for any good hash function. This property could be handy in case of
+deduplication since we would only have to compare short names of blobs
+instead of full contents.&lt;/li&gt;
+  &lt;li&gt;Changing even one bit, or changing the size of blob by even one byte would
+generate totally different name. That means there’s no way to manipulate
+blob data in such way that the resulting keys would expose some properties
+we would want (not 100% sure about that, sounds logical but
+is there any proof?). This also means that the distribution of keys should be
+uniform in the whole key space. It may be crucial if we’d like to spread
+data across network nodes.&lt;/li&gt;
+  &lt;li&gt;A blob that’s stored in CAS can not be modified since any modification would
+end up with totally different name. The only way to change is to erase the
+old blob and put new one with new name instead.&lt;/li&gt;
+  &lt;li&gt;Since names are so unique it’s safe to merge contents of two CAS systems
+without conflicts and without data loss (with some basic assumptions of
+course such as that there’s enough storage space and that the storage is
+perfectly durable).
+That’s pretty easy to understand - all blobs that are in only one source
+will not collide due to different names and all blobs that are in both
+sources, will have same names and thus same contents (with really high
+probability).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;git-has-cas&quot;&gt;Git has CAS&lt;/h1&gt;
+
+&lt;p&gt;To understand a bit more what capabilities does Content-Addressable Storage (CAS)
+give let’s bring a good example where it’s used. This example would be:
+&lt;a href=&quot;https://git-scm.com/&quot;&gt;Git&lt;/a&gt;, and I can bet most of you have already used it or
+at least heard about it.&lt;/p&gt;
+
+&lt;p&gt;Every git commit has it’s own hash number, for example:
+&lt;a href=&quot;https://github.com/torvalds/linux/commit/2dcd0af568b0cf583645c8a317dd12e344b1c72a&quot;&gt;2dcd0af&lt;/a&gt;,
+you can see it all around code hosting
+websites (sometimes just shortened to few first characters of full hash). This
+hash is sha1 of some data blob and uniquely identifies particular code version.
+In addition to commits, almost everything in git has a hash name - contents of
+a file, directory listing, diff between two data blobs, probably a lot more if
+you start digging through git internals.&lt;/p&gt;
+
+&lt;p&gt;Those hashes are calculated recursively - for example data blob describing
+directory will contain hashes of other directories and files inside.
+This could look simillar to
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Merkle_tree&quot;&gt;Merkle tree&lt;/a&gt;. One of property of such
+structure is that change of one file would only regenerate it’s own hash and
+hashes of directoories on the path to the root directory, nothing else. Since
+this is a tree-like structure, the amount of changes applied has logarithmic
+tendency, in other words: should be super fast for large, balanced directory
+trees.&lt;/p&gt;
+
+&lt;p&gt;Every git blob is unmodifiable. Once generated, you can’t change what’s behind
+the hash assigned to it. You can at most delete it.
+If you could change the contents, that would mean you can find sha1 collisions
+(so you’d prove this hash function is not cryptographically secure). Even the
+tiniest change in contents, commit message, commit dates, would result in
+totally different hash. That’s one of propertie of CAS systems, and indeed Git
+internally is one.&lt;/p&gt;
+
+&lt;p&gt;But to let us, humans work with commits efficiently, Git adds extra references
+(branches, tags, etc) on top of raw commit hashes. References are simillar to
+symbolic links in unix filesystems - they are not the content itself. Instead
+they are only linking to other locations, hashes in case of git. Link of given
+name can be altered and point to something different. That’s exactly how branches work.&lt;/p&gt;
+
+&lt;p&gt;Some references in git are also given special meaning - i.e. there could be a
+‘stable’ branch always updated to the most recent stable version of the code.
+It will be updated by someone allowed to do so. As long as we trust such person
+and there are no security bugs in authorization layers, we could trust the code.
+There’s a mechanism in Cinode simillar to references in git, but I’ll cover it
+in some other blog post.&lt;/p&gt;
+
+&lt;p&gt;Now there’s a funny fact about git, not many of us realize. If we take all git
+repos from all around the world, rename all of their branches and tags in way
+unique to each repository (for example by prefixing it with repository url),
+we would be able to merge all those repos into one giant super-git-repository.&lt;/p&gt;
+
+&lt;p&gt;Of couse such merge attempt wouldn’t be to practical due to git internals
+(some operations do scan all blobs) but it shows that CAS systems could have
+world-global namespaces. Actually one of perfect examples of such global system
+is &lt;a href=&quot;https://en.wikipedia.org/wiki/Kademlia&quot;&gt;Kademlia&lt;/a&gt; used in trackerless
+bittorrent. It shows that global CAS systems can work without any
+central server or central management.&lt;/p&gt;
+
+&lt;h1 id=&quot;what-about-security&quot;&gt;What about security?&lt;/h1&gt;
+
+&lt;p&gt;Git doesn’t have encryption built-in. But other usages of CAS systems
+could really benefit from one.&lt;/p&gt;
+
+&lt;p&gt;Let’s consider any CAS storage as an untrusted party and see it as just a
+communication medium between two users that want to securely exchange some
+information. If we start putting data onto CAS system, it will gain access to
+some obvious information:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Names of blobs&lt;/li&gt;
+  &lt;li&gt;Contents of blobs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There’s also some extra information derived from the one above and from the
+communication channel:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The amount of data we store&lt;/li&gt;
+  &lt;li&gt;Sizes of particular blobs&lt;/li&gt;
+  &lt;li&gt;Number of blobs&lt;/li&gt;
+  &lt;li&gt;Record of all upload operations metadata including:
+    &lt;ul&gt;
+      &lt;li&gt;time of upload&lt;/li&gt;
+      &lt;li&gt;uploader’s address&lt;/li&gt;
+      &lt;li&gt;upload speed (even as detailed as function over time)&lt;/li&gt;
+      &lt;li&gt;errors (broken connections, unfinished uploads, reuploaded data etc)&lt;/li&gt;
+      &lt;li&gt;most likely some client software information (name, version etc)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Record of all download operations metadata including:
+    &lt;ul&gt;
+      &lt;li&gt;times of downloads&lt;/li&gt;
+      &lt;li&gt;downloader’s address&lt;/li&gt;
+      &lt;li&gt;download speed (up to a function over time)&lt;/li&gt;
+      &lt;li&gt;errors&lt;/li&gt;
+      &lt;li&gt;most likely some client software information (name, version etc)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I’m pretty sure this list is barely scratching the surface of what other
+information could be extracted. So let’s try to first imagine a simplified
+problem: let’s hide real blob names and real data contents.&lt;/p&gt;
+
+&lt;p&gt;Hiding contents is pretty trivial - we just need to use a proven encryption
+methods, &lt;a href=&quot;https://en.wikipedia.org/wiki/Authenticated_encryption&quot;&gt;Authenticated Encryption&lt;/a&gt;
+most likely. AE does provide confidentiality, integrity and authenticity.
+Confidentiality is a must, otherwise someone else would be able to partially or
+fully gain the plain blob data.&lt;/p&gt;
+
+&lt;p&gt;Integrity is also a must to protect against
+unauthorized modification… hmm, didn’t I said before you can’t modify data in
+CAS? The name of blob, being cryptographically-secure hash function, actually
+guarantees integrity. You just can’t alter data with given name, you also can’t
+force your own name.&lt;/p&gt;
+
+&lt;p&gt;Now how about authenticity?
+According to &lt;a href=&quot;https://en.wikipedia.org/wiki/Message_authentication&quot;&gt;Wikipedia&lt;/a&gt;
+it guarantees integrity (which we already have) and data source verification.
+I’d like to skip authenticity at this point. Why? Because it really doesn’t
+matter who has uploaded the data. It’s important that the name does match the
+contents. In case of bare CAS-only storage, authenticity is not that important.
+It will be truthly needed later, when we’ll be gathering blob names. We have to
+get them from somewhere, right? And that information must be authenticated.
+I’ll discuss here this problem in some future post.&lt;/p&gt;
+
+&lt;p&gt;I didn’t yet cover one more thing. We’ll be encrypting blobs and store encrypted
+data into CAS - that way we’ll get confidentiality and integrity. We’ll also hide
+original blob name since we’ll be working on names of encrypted blobs instead.
+But where we’ll get encryption keys and IV from? That’s a really good question
+and I’ll leave it for the next blog post.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Humble beginning</title>
