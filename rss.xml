@@ -5,10 +5,251 @@
         <description>Cinode dev blog - BYO</description>
         <link>http://cinode.github.io</link>
         <atom:link href="http://cinode.github.io/rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Wed, 22 Jun 2016 09:47:03 +0200</lastBuildDate>
-        <pubDate>Wed, 22 Jun 2016 09:47:03 +0200</pubDate>
+        <lastBuildDate>Fri, 24 Jun 2016 12:19:06 +0200</lastBuildDate>
+        <pubDate>Fri, 24 Jun 2016 12:19:06 +0200</pubDate>
         <ttl>60</ttl>
 
+
+        <item>
+                <title>We need trees, we need graphs</title>
+                <description>
+&lt;h1 id=&quot;extending-flat-blob-space&quot;&gt;Extending flat blob space&lt;/h1&gt;
+
+&lt;p&gt;Standard CAS system gives us a flat namespace. There’s no structure of
+data nor relationship between blobs. Although this could be enough for
+some range of applications, better tools to organize data help simplifying apps
+and sometimes is even necessary to express data access authorization.
+That’s why we have to go beyond a flat structure and build more complex data
+connections.&lt;/p&gt;
+
+&lt;p&gt;A natural improvement is to build a tree - similarly to what happens with files
+in filesystems. This can be easily achieved in a flat structure by
+adding directory blobs. The purpose of such blobs is to list
+other ones and give them useful names. Such directories are also usful to
+express various access rights.&lt;/p&gt;
+
+&lt;p&gt;Directories let us easily form trees, we just need a recursive structure where
+one directory can contain subdirectories.&lt;/p&gt;
+
+&lt;p&gt;In case of encrypted blobs, every blob may have different encryption key.
+Because of that we have to embed information on how to gather encryption
+keys next to the name assigned to blob. For now let’s call this information
+a key info and leave the discussion on what could be stored there for later part
+of this post.&lt;/p&gt;
+
+&lt;p&gt;Naturally we see such directory structure forms a tree which is not the whole
+truth. Just as in modern local filesystems, we can implement links which
+extend beyond tree structure and form a graph. Same can be done in case of
+our blob space. Two directories can point to the same blob, just name it
+differently.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-6edf75e544803d2e7830178ed1c91776754cdd78.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the example above, Blob6 can be reached through names /Name6 and
+/Name3/Name5.&lt;/p&gt;
+
+&lt;p&gt;A nice property of this graph is that it’s acyclic, at least for now before
+we start extending it. This comes from the fact that we’re using CAS. Directory
+has to embed blob names in it’s contents. That means we’re embedding
+cryptographic hashes. If there was a cycle, we would form a structure like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-4db5c0c96ecac960499dadaa43b2a38b366af5b8.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This means that Dir1 wuold contain hash of Dir2, Dir2 would contain hash of Dir3,
+Dir3 would contain hash of Dir1. Now, how to calculate those hashes? What would
+be the data of directories? At some point we would have to guess hash of one
+directory to build hashes of others. But this is agains properties of
+cryptographic hash. Even if we randomly guessed hash of Dir1, recalculating it
+through Dir3 and Dir2 would yield different result.
+Although such cycle is not impossible, finding it would be equal to breaking
+cryptographic hash function.&lt;/p&gt;
+
+&lt;p&gt;Although being acyclic is a nice property, applications should not rely on it.
+Even if there are no cycles, it’s easy to generate really long chain of
+subdirectories so every application that traverses such blob trees would have
+to implement some recursiveness limits to prevent long running loops.&lt;/p&gt;
+
+&lt;h1 id=&quot;metadata&quot;&gt;Metadata&lt;/h1&gt;
+
+&lt;p&gt;In addition to filename, given blob may have many more properties. One such
+property is it’s mime type, another would be creation date. There could be
+author, expiry date etc. That’s why it’s best to keep a dynamic map of such
+metadata properties per each object. In fact, the name and key info could also
+be considered a metadata.&lt;/p&gt;
+
+&lt;h1 id=&quot;hidden-keys&quot;&gt;Hidden keys&lt;/h1&gt;
+
+&lt;p&gt;As mentioned before, key info must be embedded within directory itself.
+The most straightforward way to store it is to put the raw key value straight
+into the info. Such key is still secured by encryption of directory blob.
+Only those who have access to directory’s listing will get keys. This approach
+could be fine in many cases. The root directory is then a major security gate
+for the whole structure. If you know key and blob name
+of such root, you then have access to everything below.&lt;/p&gt;
+
+&lt;p&gt;There’s one risk here though - if a contents of directory blob is accidentially
+published or shared with a recipient who wasn’t supposed to get the access,
+there’s no way to easily revert such operation. Keys has been given, and along with
+directory keys, access to every blob that could be reached from that directory
+and it’s subdirectories.&lt;/p&gt;
+
+&lt;h1 id=&quot;keys-with-a-lock&quot;&gt;Keys with a lock&lt;/h1&gt;
+
+&lt;p&gt;Instead of full key in key info we could easily store other peace of information
+that does not reveal the key itself but still must be used to build one.
+Simplest solution that comes to my mind is to store key’s id instead of key’s
+value. User would then have to get some keys database and figure out if inside
+this database, there’s the key he needs. If he wouldn’t have the key inside
+his DB, then he woudln’t have access to blob.&lt;/p&gt;
+
+&lt;p&gt;Another solution is to store encrypted key. Now to not make words messy: in order
+to get the key for that particular blob, we have to take it’s encrypted form,
+get some other key (which could be directory’s key for example) and then decrypt
+blob’s key. We can go into a little inception - key to decrypt blob’s key could
+actually be encrypted with another key too. That key can be protected by another
+key and so on:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-fcce9fd661071500e5151d9784117e8e9fb0fc6d.png&quot; /&gt;
+This structure can be found in &lt;a href=&quot;https://www.net.t-labs.tu-berlin.de/~stefan/srds06.pdf&quot;&gt;Cryptree structure&lt;/a&gt;
+and is called cryptographic link. What this basically means? If you know Key 1
+then you know Key 2, if you know Key 2, then you know Key 3 and so on. Knowing
+only Key 3 won’t reveal Key 1 and Key 2 but will reveal Key 4 and Key 5.&lt;/p&gt;
+
+&lt;p&gt;Of course those keys don’t have to be used only to decrypt another keys. They
+can also be used to encrypt and decrypt some other peace of information, blob
+being one of them.&lt;/p&gt;
+
+&lt;p&gt;We can also have multiple paths to one key:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-b681fb62e7c895e9167f16c31a15560ba4af28b3.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is the structure I’d like to explore a bit.&lt;/p&gt;
+
+&lt;h1 id=&quot;friend-of-friends&quot;&gt;Friend of friends&lt;/h1&gt;
+
+&lt;p&gt;You may recall that many social platforms expose you an information up to some
+level of connection. Some information is viewable by our “friends”, some is
+even seen by “friends of our friends”. Let’s try to express this idea in
+the world of cryptography.&lt;/p&gt;
+
+&lt;p&gt;Our goal is to have different access rights to data
+depending on the distane of the source. The distance can easily be modelled
+using directory blobs and key info can be used to grant us rights:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-1bd5f989909421ff98a1eadbe459321ff45b948c.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this example, each user generates 3 master keys assigned to his directory:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Key lvl1 - this is the key that gives access to all private data that sould be
+accessible only by the owner. Since this key links to lvl2 and lvl3, user having
+it will have access to information on all other levels.&lt;/li&gt;
+  &lt;li&gt;Key lvl2 - this is the key that’s exposed to direct frinds of the user and
+protects blobs that contain information visible to friends. It also links
+to lvl3 key.&lt;/li&gt;
+  &lt;li&gt;Key lvl3 - this is the key that protects information visible by friends of
+friends.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In order for this to work, we must keep lvl1 key for ourselves, lvl2 key
+must be shared with our friends and lvl3 key must be accessible to friends
+of our friends. Data protection is guaranteed here. We still have to think
+how to automatically expose keys to users.&lt;/p&gt;
+
+&lt;p&gt;Giving key to friend sounds pretty trivial, we know who our friends are and we
+manage those relations, it would require asymetric links from cryptree structure
+but the basic rule is that we are in full control of our connections.&lt;/p&gt;
+
+&lt;p&gt;Now, giving keys to friends of our friends may be a bit tricky though. We don’t
+have access nor we manage friend relationship of our friends so granting lvl3
+key must be handled automatically. In order to see a solution to this problem,
+let’s picture multiple users and their keys (that’s of course not the whole
+picture, I’ve removed unnecessry parts):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-1451b662bfbc52f472e05705e0b835fb18e552ef.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the example above, User1 represents the user who’s sharing his data.
+User2 is a direct friend of User1. User3 is a direct friend of User 2 but is
+not a direct friend of User1. Our goal is to give access to User1 lvl3 key to User3.&lt;/p&gt;
+
+&lt;p&gt;Since User3 is a friend of User2, we know User3 knows User2 lvl2 key. We can
+exploit that property and add extra blob in User2 directory that will contain
+all lvl3 keys of his friends. That way, everyone who has access to USer2 lvl2
+key will gain access to lvl3 keys of all his friends.&lt;/p&gt;
+
+&lt;p&gt;This of course requires User2 to manage this extra blob with keys. But I believe
+this is no more complicated than establishing friend relationship itself.
+Of course the example here is simplified and will probably require more assymetric
+links to make work but shows the general idea.&lt;/p&gt;
+
+&lt;p&gt;This is just an example of how powerful directory structures could be. It does
+require clever key management and some extra cryptographic primitives (such as
+symmetric and assymetric ryptographic links) but it proves usefulnes of such
+structure. We could probably come up with a lot more. But let’s bring some
+problems that can easily arise with directory blobs.&lt;/p&gt;
+
+&lt;h1 id=&quot;fat-dir&quot;&gt;Fat dir&lt;/h1&gt;
+
+&lt;p&gt;As long as directory is relatively small, operations on it should be simple.
+Whenever something inside such directory changes, we just update it’s contents,
+reencrypt it and propagate the change up in the directory chain (I’ll discuss
+where such propagtion ends in future posts).&lt;/p&gt;
+
+&lt;p&gt;But let’s imagine a directory containing millions of entries. I can bet that
+real-world applications would very quickly generate them. Now we won’t be able to
+efficiently handle such amount of data. Reencryption and reupload of data could
+eaisly saturate user’s resources.&lt;/p&gt;
+
+&lt;p&gt;What we can do is to split one blob into multiple ones. This can easily be done
+by creating something similar to hash map. Hashing name would then be good
+enough to evenly split one huge directory into multiple smaller partial directories
+plus one blob for the hash map itself.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-7b55f66d85f9332c881e8eb285c6c9aa020fa43e.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This solution wuld be problematic if we’d like to list an
+ordered subset of entries - in such case search would have to be performed in
+all partial blobs.&lt;/p&gt;
+
+&lt;p&gt;In case where order would be needed though we could use different trick. Let’s
+take all entries sorted and then split this set into similarly sized subsets.
+The blob for the directory would then contain information about starting and
+ending entry name and link to sub-directory blob&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/ditaa/ditaa-bb1eb47502aa6452be754649a14472317b2e2d10.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There could be some significant problems to solve in such structure during
+upgrade - we’d have to move entries between partial blobs, dynamically split and
+merge to keep the balance at an acceptable level. However if we could afford
+to build such directory once in a while and use it for read-only operations,
+performance gain could be significant.&lt;/p&gt;
+
+&lt;p&gt;That’s it for this post. I’m aware that I just scratched the surface and
+oversimplified real problem in many cases. What I wanted to show is how
+we could build complex strubtures by using simple blobs and various key
+management techniques. I hope you have a generic feeling of how powerful such
+system could be. One important thing to note here is that we’re still relying
+on simple CAS storage below which means that the whole solution can use storage
+independent from any particular vendor, can be stored in a secure way without revealing
+information to 3rd parties and can scale well.&lt;/p&gt;
+
+&lt;h1 id=&quot;are-we-done-yet-nope&quot;&gt;Are we done yet? Nope.&lt;/h1&gt;
+
+&lt;p&gt;We still are not yet ready to build fully functional applications with what
+we have so far. Although blobs started forming nice data structures, we’re
+lacking some attachment points, links to this structure. And similarly to how
+branch names in git let us efficiently colaborate with other people, we need
+few extra primitives that would let us do the same in Cinode.&lt;/p&gt;
+
+&lt;p&gt;But before I’ll dig into that problem, let’s first create proof-of-concept
+application with things discussed so far.&lt;/p&gt;
+
+&lt;p&gt;See you soon.&lt;/p&gt;
+</description>
+                <link>http://cinode.github.io/2016/06/23/we-need-trees-we-need-graphs</link>
+                <guid>http://cinode.github.io/2016/06/23/we-need-trees-we-need-graphs</guid>
+                <pubDate>Thu, 23 Jun 2016 00:00:00 +0200</pubDate>
+        </item>
 
         <item>
                 <title>Password please</title>
