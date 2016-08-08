@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Refactoring mistakes</title>
+    <meta name="description" content="Before moving further with the development, one small mistake must be corrected...">
+    <meta name="author" content="BYO">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/themes/midnight/css/ie.css">
+    <![endif]-->
+    <link href="/assets/themes/midnight/css/styles.css" rel="stylesheet">
+    <link href="/assets/themes/midnight/css/pygment_trac.css" rel="stylesheet" type="text/css" media="all">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/assets/themes/midnight/js/respond.js"></script>
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own img
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  </head>
+
+  <body>
+
+    <div id="header">
+      <nav>
+        <li class="title"><h1><a href="/">Cinode dev blog</a></h1></li>
+        
+        
+        
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+      </nav>
+    </div>
+
+    <div class="wrapper">
+
+      <div class="content">
+        
+
+<div class="wrapper">
+  <section>
+    <div id="title">
+      <h1>Refactoring mistakes</h1>
+      
+      <br><hr>
+      <span class="credits left">Written by: <a href="">BYO</a></span>
+      <span class="credits right">Last updated: 2016-08-08 00:00:00 +0200</span>
+    </div>
+    
+<h1 id="mistake-what-mistake">Mistake? What mistake?</h1>
+
+<p>So far we’ve implemented CAS layer. It already looks pretty nice and has high
+test coverage. But I made one small mistake there. Athough CAS is currently
+doing what it’s supposed to do, it will have to be extended later to gain a bit
+of dynamic features. Using CAS name for such extended module would be
+misleading. That’s why it has to be renamed.</p>
+
+<p>I’ve chosen <code>datastore</code> for the new name. It’s really generic, informs that
+module with it’s name will store data but doesn’t bring any serious limits.</p>
+
+<p>The only thing left to do was to change the code and try to not break something.</p>
+
+<h1 id="refactools">RefacTools</h1>
+
+<p>Refactoring in golang is relatively simple thanks to tools such as
+<a href="https://golang.org/cmd/gofmt/">gofmt</a>,
+<a href="https://godoc.org/golang.org/x/tools/cmd/gomvpkg">gomvpkg</a> or
+<a href="https://godoc.org/golang.org/x/tools/cmd/gorename">gorename</a>. Most of the time
+I spend adjusting comments and searching for incorrect names.</p>
+
+<p>And thanks God I had enough testing coverage to quickly ensure everything
+compiles and runs as expected.</p>
+
+<p>That would be the end of this short post. The result of today’s post is
+<a href="https://github.com/cinode/go/tree/v2016-08-08">here</a>. Please take a look if you’re curious what has changed.</p>
+
+<p>Bye</p>
+
+    <hr>
+    <div style="text-align: center;">
+      <span style="float: left;">
+        
+          <a href="/2016/07/26/cas-in-action" title="CAS in action">&larr; Previous</a>
+        
+      </span>
+      <span>
+        <a href="/archive.html">Archive</a>
+      </span>
+      <span style="float: right;">
+        
+          <a>Next &rarr;</a>
+        
+      </span>
+      </nav>
+    </div>
+    <div id="tags">
+      <br>
+      
+        Tags: 
+        <ul style="display: inline; padding-left: 10px;">
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#golang-ref">golang <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#programming-ref">programming <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#storage-ref">storage <span>4</span></a></li>
+     
+    	<li><a href="/tags.html#prototype-ref">prototype <span>2</span></a></li>
+    
+  
+
+
+
+        </ul>
+      
+    </div>
+  </section>
+  <section>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_developer = 1;
+    var disqus_shortname = 'cinodeblog'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </section>
+</div>
+
+
+
+      </div>
+
+      <footer>
+        <p>&copy; BYO 2016
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+    
+
+
+
+  </body>
+</html>
+

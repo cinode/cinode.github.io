@@ -4,13 +4,50 @@
  <title>Cinode dev blog</title>
  <link href="http://cinode.github.io/atom.xml" rel="self"/>
  <link href="http://cinode.github.io"/>
- <updated>2016-07-31T00:01:23+02:00</updated>
+ <updated>2016-08-09T00:19:05+02:00</updated>
  <id>http://cinode.github.io</id>
  <author>
    <name>BYO</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Refactoring mistakes</title>
+   <link href="http://cinode.github.io/2016/08/08/refactoring-mistakes"/>
+   <updated>2016-08-08T00:00:00+02:00</updated>
+   <id>http://cinode.github.io/2016/08/08/refactoring-mistakes</id>
+   <content type="html">
+&lt;h1 id=&quot;mistake-what-mistake&quot;&gt;Mistake? What mistake?&lt;/h1&gt;
+
+&lt;p&gt;So far we’ve implemented CAS layer. It already looks pretty nice and has high
+test coverage. But I made one small mistake there. Athough CAS is currently
+doing what it’s supposed to do, it will have to be extended later to gain a bit
+of dynamic features. Using CAS name for such extended module would be
+misleading. That’s why it has to be renamed.&lt;/p&gt;
+
+&lt;p&gt;I’ve chosen &lt;code&gt;datastore&lt;/code&gt; for the new name. It’s really generic, informs that
+module with it’s name will store data but doesn’t bring any serious limits.&lt;/p&gt;
+
+&lt;p&gt;The only thing left to do was to change the code and try to not break something.&lt;/p&gt;
+
+&lt;h1 id=&quot;refactools&quot;&gt;RefacTools&lt;/h1&gt;
+
+&lt;p&gt;Refactoring in golang is relatively simple thanks to tools such as
+&lt;a href=&quot;https://golang.org/cmd/gofmt/&quot;&gt;gofmt&lt;/a&gt;,
+&lt;a href=&quot;https://godoc.org/golang.org/x/tools/cmd/gomvpkg&quot;&gt;gomvpkg&lt;/a&gt; or
+&lt;a href=&quot;https://godoc.org/golang.org/x/tools/cmd/gorename&quot;&gt;gorename&lt;/a&gt;. Most of the time
+I spend adjusting comments and searching for incorrect names.&lt;/p&gt;
+
+&lt;p&gt;And thanks God I had enough testing coverage to quickly ensure everything
+compiles and runs as expected.&lt;/p&gt;
+
+&lt;p&gt;That would be the end of this short post. The result of today’s post is
+&lt;a href=&quot;https://github.com/cinode/go/tree/v2016-08-08&quot;&gt;here&lt;/a&gt;. Please take a look if you’re curious what has changed.&lt;/p&gt;
+
+&lt;p&gt;Bye&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>CAS in action</title>
