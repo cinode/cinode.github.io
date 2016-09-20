@@ -5,10 +5,68 @@
         <description>Cinode dev blog - BYO</description>
         <link>http://cinode.github.io</link>
         <atom:link href="http://cinode.github.io/rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Tue, 09 Aug 2016 00:19:05 +0200</lastBuildDate>
-        <pubDate>Tue, 09 Aug 2016 00:19:05 +0200</pubDate>
+        <lastBuildDate>Tue, 20 Sep 2016 22:16:13 +0200</lastBuildDate>
+        <pubDate>Tue, 20 Sep 2016 22:16:13 +0200</pubDate>
         <ttl>60</ttl>
 
+
+        <item>
+                <title>Encrypt &#39;em all</title>
+                <description>
+&lt;h1 id=&quot;another-step-in-the-implementation-journey&quot;&gt;Another step in the implementation journey&lt;/h1&gt;
+
+&lt;p&gt;This time we’ll take a look at &lt;a href=&quot;https://github.com/cinode/go/tree/v2016-09-12/blenc&quot;&gt;the implementation of blob encryption layer&lt;/a&gt;. Just before we start I give you one puzzle to solve - there’s one serious security flow in   current implementation. I wonder if you’ll be able to spot it. I plan to  show and fix it in the next post.&lt;/p&gt;
+
+&lt;h1 id=&quot;general-idea&quot;&gt;General idea&lt;/h1&gt;
+
+&lt;p&gt;Blob encryption will be another layer of code, separate from the fist one - datastore. To keep it isolated, it will have it’s own namespace: blenc. (Yup, I was too lazy to come up with a better name ;))&lt;/p&gt;
+
+&lt;p&gt;What would be the purpose of this layer? It will handle three major operations:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Encrypt data&lt;/li&gt;
+  &lt;li&gt;Decrypt data&lt;/li&gt;
+  &lt;li&gt;Generate encryption parameters (keys, ciphers, IVs)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Encryption and decryption is pretty obvious here: on the one end of the layer we’ll be talking in plain text, on the other side we’ll only see the encrypted stuff.&lt;/p&gt;
+
+&lt;p&gt;This layer also handles selection of ciphers and their parameters. Since we’re handling both cipher selection and encryption parameters in a code close to each other, it will be easier to match them correctly and avoid subtle bugs leading to security disasters.&lt;/p&gt;
+
+&lt;h1 id=&quot;ciphers&quot;&gt;Ciphers&lt;/h1&gt;
+
+&lt;p&gt;I decided to use stream ciphers. It simplifies implementation since no secure padding is needed to round data to block size. Also, the size of encrypted blob and the plaintext one is the same. This is both good and bad - good since we’re not occupying more space due to encryption, bad because it reveals the size of the original data. It’s not yet a security flow but something to think about in layers on higher levels where we can handle the issue much more efficiently.&lt;/p&gt;
+
+&lt;p&gt;Currently there are two well-known ciphers supported in the code: &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L69&quot;&gt;AES256-CTR&lt;/a&gt; and &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L80&quot;&gt;ChaCha20&lt;/a&gt;. &lt;a href=&quot;https://pl.wikipedia.org/wiki/Advanced_Encryption_Standard&quot;&gt;AES&lt;/a&gt; was obvious for it’s wide adoption and years of cryptoanalysis. Used with CTR mode it creates really strong stream cipher. &lt;a href=&quot;https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant&quot;&gt;ChaCha20&lt;/a&gt; turns out to be good choice too. It’s strength is in it’s great performance (especially on mobiles where there’s no hardware aceleration for AES). If you wonder whether anybody you know is using it in production now, take a look at &lt;a href=&quot;https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/&quot;&gt;Cloudflare&lt;/a&gt; and &lt;a href=&quot;https://security.googleblog.com/2014/04/speeding-up-and-strengthening-https.html&quot;&gt;Google&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I have selected &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L22&quot;&gt;ChaCha20&lt;/a&gt; to be the default encryption cipher. I believe it has a great potential and will become more widely adopted in the world of smaller devices (IoT is just around the corner). The &lt;a href=&quot;https://github.com/yawning/chacha20&quot;&gt;implementation&lt;/a&gt; you can find in go is also very fast, easily outperforming AES if no hardware acceleration is present.&lt;/p&gt;
+
+&lt;h1 id=&quot;keygens&quot;&gt;KeyGens&lt;/h1&gt;
+
+&lt;p&gt;Key generation was a bit tricky. First I implemented trivial key generator that always returns &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_contant.go&quot;&gt;predefined key data&lt;/a&gt;. Because the same IV is used for every blob, this implementation is really unsafe and fundamentally broken - it will generate the same key+IV pairs for many blobs. Because of that, the implementation is internal to the module and I use it only for testing purposes.&lt;/p&gt;
+
+&lt;p&gt;Another simple implementation was a &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_random.go&quot;&gt;random key generator&lt;/a&gt;. It’s almost as simple as the constant-key one but it does provide high quality random keys. As long as we’re not relying on data deduplication, this method is the best way to generate keys.&lt;/p&gt;
+
+&lt;p&gt;The last key generator I implemented in this iteration was a &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_contents.go&quot;&gt;contents-based key generator&lt;/a&gt;. It’s purpose is to create key from the hash of blob’s contents. It is secure because it will generate different keys for different blobs - that requirement is guaranteed by collision resistance property of cryptographic hash function. This generator is the only one so far which requires reading whole data bufer (to calculate hash) before we start encrypting it. Data source is given as only io.Reader interface - meaning we can not seek back. This forces us to store the data in some kind of temporary buffer - and this was the hardest part to implement for this key generation scheme.&lt;/p&gt;
+
+&lt;h1 id=&quot;tricky-buffer&quot;&gt;Tricky buffer&lt;/h1&gt;
+
+&lt;p&gt;There are few naïve approaches to temporary buffer. First is to store everything in memory. Of course this would limit the size of blobs we could handle. Another idea is to store the data in some temporary file and then read id back. It sounds like a much better approach and has indeed been used in my implementation but if implemented incorrectly it would lead to serious security flows.&lt;/p&gt;
+
+&lt;p&gt;First of all, the data stored in temporary files could accidentally be made readable by other users on the same system revealing plaintext data to them. Second, this data would end up being written down onto local filesystem and HDD - secure erasure of data is not a trivial problem and in case of flash-based memory may not be possible at all. That’s why in my implementation I’m storing the data in an encrypted form. The key is random and is kept inside memory only. Losing the key means losing access to the plaintext which is exactly what we need. There’s a large encryption overhead though (3x: encrypt data when storing to temporary file, decrypt data when reading from temporary file and do the final encryption) but I believe it’s worth it. The implementation of secure temporary buffer is &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/secure_temp_buffer.go&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Even if we store data encrypted on a temporary location we may still fail to protect against tempering of encrypted data - a common mistake if data integrity is not checked. To overcome this issue in my implementation, I created a &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-12/blenc/reader_hash_validator.go&quot;&gt;reader validating hash of it’s data&lt;/a&gt;. It’s purpose is to check if the data read through it has given hash value and reject the stream if it’s not. Since we already have the hash of the original, unencrypted data (it will be used to generate encryption key), we can use it to check the integrity when we read back from temporary buffer.&lt;/p&gt;
+
+&lt;h1 id=&quot;not-all-done-yet&quot;&gt;Not all done yet&lt;/h1&gt;
+
+&lt;p&gt;I didn’t implement everything in this layer yet. On the list of things left to do is the key generator using cyprographic signs and http interface. I leave those for some future updates - I believe enough has been implemented to move on to the next layer that would create a solid base for applications hosted in Cinode.&lt;/p&gt;
+
+&lt;p&gt;See you at the next post.&lt;/p&gt;
+</description>
+                <link>http://cinode.github.io/2016/09/12/encrypt-em-all</link>
+                <guid>http://cinode.github.io/2016/09/12/encrypt-em-all</guid>
+                <pubDate>Mon, 12 Sep 2016 00:00:00 +0200</pubDate>
+        </item>
 
         <item>
                 <title>Refactoring mistakes</title>
