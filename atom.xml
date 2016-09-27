@@ -4,13 +4,49 @@
  <title>Cinode dev blog</title>
  <link href="http://cinode.github.io/atom.xml" rel="self"/>
  <link href="http://cinode.github.io"/>
- <updated>2016-09-20T22:16:13+02:00</updated>
+ <updated>2016-09-27T23:55:37+02:00</updated>
  <id>http://cinode.github.io</id>
  <author>
    <name>BYO</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Trust noone</title>
+   <link href="http://cinode.github.io/2016/09/27/trust-noone"/>
+   <updated>2016-09-27T00:00:00+02:00</updated>
+   <id>http://cinode.github.io/2016/09/27/trust-noone</id>
+   <content type="html">
+&lt;h1 id=&quot;where-things-went-wrong&quot;&gt;Where things went wrong?&lt;/h1&gt;
+
+&lt;p&gt;Let’s solve the “puzzle” from last post, shall we?&lt;/p&gt;
+
+&lt;p&gt;The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn’t check whether it’s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.&lt;/p&gt;
+
+&lt;p&gt;We could argue about the in-memory implmenetation which should be secure as long as someone doesn’t mess up with the memory of our process (sometimes &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_degradation&quot;&gt;it happens&lt;/a&gt; unintentionally). But when files are stored on the local HDD, it’s much easier to alter them. The least secure of all three implementations was the web connector one. Connecting it to a bogus server would basically break our security since any blob could be replaced with anything else.&lt;/p&gt;
+
+&lt;p&gt;So what’s the fix? You can see all changes I made &lt;a href=&quot;https://github.com/cinode/go/pull/9/files&quot;&gt;here&lt;/a&gt;, but they can be summarized as:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;When reading data from any public interface implementation, always check if the contents &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L33&quot;&gt;does match given blob name&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;In case of web connector, &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-27/datastore/webconnector.go#L90&quot;&gt;check what name is generated when calling SaveAutoNamed&lt;/a&gt; - it’s to ensure the server we’re connecting to does produce valid blob names&lt;/li&gt;
+  &lt;li&gt;A bonus one (not directly connected to trust problems but still being a security issue) - when comparing blob names, &lt;a href=&quot;https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L11&quot;&gt;use constant-time comparision&lt;/a&gt; - this could prevent exposure of raw blob names in case we want to hide them on higher levels&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;After those changes, it’s now required for the &lt;code&gt;datastore&lt;/code&gt; interface to return a valid data for given blob name or fail with an error so the consumer of this interface can assume no error means valid data.&lt;/p&gt;
+
+&lt;h1 id=&quot;lets-play-the-bad-guy&quot;&gt;Let’s play the bad guy&lt;/h1&gt;
+
+&lt;p&gt;Ok, let’s think now how the trust issue could be exploited. If we assume that the attacker has full access to the storage (i.e. access to files in case of file-based datastore), he could basically inject any contents he want to whoever is using the datastore.&lt;/p&gt;
+
+&lt;p&gt;In case of plaintext data the result is pretty devastating - i.e. replacement of some javascript on a statically-served web page with a malicious version. Once the attacker can inject his own code into victim’s computer, the fight is over.&lt;/p&gt;
+
+&lt;p&gt;One may think though that if the data stored in datastore is encrypted, we’re in a much better position, the attacker wouldn’t be able to inject his own ciphertext without the knowledge of the key, right? Nothing further from the truth, this is known as &lt;a href=&quot;https://en.wikipedia.org/wiki/Chosen-ciphertext_attack&quot;&gt;chosen ciphertext attack&lt;/a&gt;. Results could be as devastating as in case of plaintext stored in the datastore, there would be no integrity of data.&lt;/p&gt;
+
+&lt;p&gt;That’s it for today. Hope to write something more soon.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Encrypt &#39;em all</title>

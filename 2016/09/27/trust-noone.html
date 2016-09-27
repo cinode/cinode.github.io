@@ -4,8 +4,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Refactoring mistakes</title>
-    <meta name="description" content="Before moving further with the development, one small mistake must be corrected...">
+    <title>Trust noone</title>
+    <meta name="description" content="Let's fix some parts of the code that are too credulous.">
     <meta name="author" content="BYO">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -99,47 +99,46 @@
 <div class="wrapper">
   <section>
     <div id="title">
-      <h1>Refactoring mistakes</h1>
+      <h1>Trust noone</h1>
       
       <br><hr>
       <span class="credits left">Written by: <a href="">BYO</a></span>
-      <span class="credits right">Last updated: 2016-08-08 00:00:00 +0200</span>
+      <span class="credits right">Last updated: 2016-09-27 00:00:00 +0200</span>
     </div>
     
-<h1 id="mistake-what-mistake">Mistake? What mistake?</h1>
+<h1 id="where-things-went-wrong">Where things went wrong?</h1>
 
-<p>So far we’ve implemented CAS layer. It already looks pretty nice and has high
-test coverage. But I made one small mistake there. Athough CAS is currently
-doing what it’s supposed to do, it will have to be extended later to gain a bit
-of dynamic features. Using CAS name for such extended module would be
-misleading. That’s why it has to be renamed.</p>
+<p>Let’s solve the “puzzle” from last post, shall we?</p>
 
-<p>I’ve chosen <code>datastore</code> for the new name. It’s really generic, informs that
-module with it’s name will store data but doesn’t bring any serious limits.</p>
+<p>The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn’t check whether it’s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</p>
 
-<p>The only thing left to do was to change the code and try to not break something.</p>
+<p>We could argue about the in-memory implmenetation which should be secure as long as someone doesn’t mess up with the memory of our process (sometimes <a href="https://en.wikipedia.org/wiki/Data_degradation">it happens</a> unintentionally). But when files are stored on the local HDD, it’s much easier to alter them. The least secure of all three implementations was the web connector one. Connecting it to a bogus server would basically break our security since any blob could be replaced with anything else.</p>
 
-<h1 id="refactools">RefacTools</h1>
+<p>So what’s the fix? You can see all changes I made <a href="https://github.com/cinode/go/pull/9/files">here</a>, but they can be summarized as:</p>
 
-<p>Refactoring in golang is relatively simple thanks to tools such as
-<a href="https://golang.org/cmd/gofmt/">gofmt</a>,
-<a href="https://godoc.org/golang.org/x/tools/cmd/gomvpkg">gomvpkg</a> or
-<a href="https://godoc.org/golang.org/x/tools/cmd/gorename">gorename</a>. Most of the time
-I spend adjusting comments and searching for incorrect names.</p>
+<ol>
+  <li>When reading data from any public interface implementation, always check if the contents <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L33">does match given blob name</a></li>
+  <li>In case of web connector, <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/webconnector.go#L90">check what name is generated when calling SaveAutoNamed</a> - it’s to ensure the server we’re connecting to does produce valid blob names</li>
+  <li>A bonus one (not directly connected to trust problems but still being a security issue) - when comparing blob names, <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L11">use constant-time comparision</a> - this could prevent exposure of raw blob names in case we want to hide them on higher levels</li>
+</ol>
 
-<p>And thanks God I had enough testing coverage to quickly ensure everything
-compiles and runs as expected.</p>
+<p>After those changes, it’s now required for the <code>datastore</code> interface to return a valid data for given blob name or fail with an error so the consumer of this interface can assume no error means valid data.</p>
 
-<p>That would be the end of this short post. The result of today’s post is
-<a href="https://github.com/cinode/go/tree/v2016-08-08">here</a>. Please take a look if you’re curious what has changed.</p>
+<h1 id="lets-play-the-bad-guy">Let’s play the bad guy</h1>
 
-<p>Bye</p>
+<p>Ok, let’s think now how the trust issue could be exploited. If we assume that the attacker has full access to the storage (i.e. access to files in case of file-based datastore), he could basically inject any contents he want to whoever is using the datastore.</p>
+
+<p>In case of plaintext data the result is pretty devastating - i.e. replacement of some javascript on a statically-served web page with a malicious version. Once the attacker can inject his own code into victim’s computer, the fight is over.</p>
+
+<p>One may think though that if the data stored in datastore is encrypted, we’re in a much better position, the attacker wouldn’t be able to inject his own ciphertext without the knowledge of the key, right? Nothing further from the truth, this is known as <a href="https://en.wikipedia.org/wiki/Chosen-ciphertext_attack">chosen ciphertext attack</a>. Results could be as devastating as in case of plaintext stored in the datastore, there would be no integrity of data.</p>
+
+<p>That’s it for today. Hope to write something more soon.</p>
 
     <hr>
     <div style="text-align: center;">
       <span style="float: left;">
         
-          <a href="/2016/07/26/cas-in-action" title="CAS in action">&larr; Previous</a>
+          <a href="/2016/09/12/encrypt-em-all" title="Encrypt 'em all">&larr; Previous</a>
         
       </span>
       <span>
@@ -147,7 +146,7 @@ compiles and runs as expected.</p>
       </span>
       <span style="float: right;">
         
-          <a href="/2016/09/12/encrypt-em-all" title="Encrypt 'em all">Next &rarr;</a>
+          <a>Next &rarr;</a>
         
       </span>
       </nav>
@@ -167,11 +166,11 @@ compiles and runs as expected.</p>
      
     	<li><a href="/tags.html#programming-ref">programming <span>4</span></a></li>
      
-    	<li><a href="/tags.html#storage-ref">storage <span>4</span></a></li>
+    	<li><a href="/tags.html#encryption-ref">encryption <span>3</span></a></li>
      
     	<li><a href="/tags.html#prototype-ref">prototype <span>4</span></a></li>
      
-    	<li><a href="/tags.html#refactoring-ref">refactoring <span>1</span></a></li>
+    	<li><a href="/tags.html#bugfix-ref">bugfix <span>1</span></a></li>
     
   
 
