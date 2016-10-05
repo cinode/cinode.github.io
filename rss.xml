@@ -5,8 +5,8 @@
         <description>Cinode dev blog - BYO</description>
         <link>http://cinode.github.io</link>
         <atom:link href="http://cinode.github.io/rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Wed, 05 Oct 2016 07:42:07 +0200</lastBuildDate>
-        <pubDate>Wed, 05 Oct 2016 07:42:07 +0200</pubDate>
+        <lastBuildDate>Wed, 05 Oct 2016 11:19:56 +0200</lastBuildDate>
+        <pubDate>Wed, 05 Oct 2016 11:19:56 +0200</pubDate>
         <ttl>60</ttl>
 
 
@@ -27,13 +27,13 @@
 
 &lt;p&gt;Although it looks like the graph we can form with our blob should be acyclic, this should not be relied on. In a situation where we don’t have encryption, cyclic graph would be almost impossible to calculate - contents of directory blobs would indirectly depend on their own hashes so cryptographic hash function would have to expose some special properties allowing us to create such cycle. This though would be against properties of strong cryptographic hash functions.&lt;/p&gt;
 
-&lt;p&gt;As soon as we introduce encrypted blobs, the case may be more complicated. Even though the contents of a directory blob would be dependent on it’s hash, we can still tweak the encryption key. It could be likely that the contents of encrypted blob (that’s what we would use to get the hash from) could be tweaked through encryption key so that it matches expected result. A correct proof would definitely help here (maybe in some future blog post) but right now I’d say we would have to assume those graphs could be cyclic too&lt;/p&gt;
+&lt;p&gt;As soon as we introduce encrypted blobs, the case may be more complicated. Even though the contents of a directory blob would be dependent on it’s hash, we can still tweak the encryption key. It could be likely that the contents of encrypted blob (that’s what we would use to get the hash from) could be tweaked through encryption key so that it matches expected result. A correct proof would definitely help here (maybe in some future blog post) but right now I’d say we would have to assume those graphs could be cyclic too.&lt;/p&gt;
 
-&lt;p&gt;Later we’ll also introduce something called dynamic links which would let us trivially add cycles. What this means is that applications that would like to trace the graph would have to add some protection agains recursivity level to prevent hangs or stack overflows.&lt;/p&gt;
+&lt;p&gt;Later we’ll also introduce something called dynamic links which would let us trivially add cycles. What this means is that applications that would like to trace the graph would have to add some protection against recursivity level to prevent hangs or stack overflows.&lt;/p&gt;
 
 &lt;h1 id=&quot;metadata&quot;&gt;Metadata&lt;/h1&gt;
 
-&lt;p&gt;In addition to filename, given blob may have many more properties. A good example of those would be: blog’s mime type, creation date, author, expiry date. Since the list of properties could be dynamically adjusted for every blob, it’s best to keep them in a dynamic map per each object.&lt;/p&gt;
+&lt;p&gt;In addition to filename, given blob may have many more properties. A good example of those would be: blob’s mime type, creation date, author, expiry date. Since the list of properties could be dynamically adjusted for every blob, it’s best to keep them in a dynamic map per each object.&lt;/p&gt;
 
 &lt;p&gt;There’s one special property needed for every blob if they are encrypted - &lt;code&gt;key info&lt;/code&gt;. This data would have to contain enough information to create encryption key for given blob. A natural location for such property would be blob’s metadata.&lt;/p&gt;
 
@@ -77,7 +77,7 @@
 
 &lt;p&gt;In order for this to work, first and the most important rule is that we must keep &lt;code&gt;Key lvl1&lt;/code&gt; for ourselves - that’s to protect the information that’s private.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;Key lvl2&lt;/code&gt; must be shared with our friends. Friend relationships are mostlikely associated with some communication channel between users so it should be utilized to exchange &lt;code&gt;Key lvl2&lt;/code&gt; information.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Key lvl2&lt;/code&gt; must be shared with our friends. Friend relationships are most likely associated with some communication channel between users so it should be utilized to exchange &lt;code&gt;Key lvl2&lt;/code&gt; information.&lt;/p&gt;
 
 &lt;p&gt;Giving keys to friends of our friends is a bit tricky though. We don’t have access nor we manage friend relationship of our friends so granting lvl3 key must be handled through some indirection we can controll. In order to see a solution to this problem, let’s picture multiple users and their keys (I’ve removed unimportant parts):&lt;/p&gt;
 
@@ -89,7 +89,7 @@
 
 &lt;p&gt;This of course requires &lt;code&gt;User2&lt;/code&gt; to manage this extra blob with keys. But this should be no more complicated than establishing friend relationship itself. I can bet that the final implementation will be much more complicated and will include some assymetric crypto, but I hope it shows generic idea.&lt;/p&gt;
 
-&lt;p&gt;This is just an example of how powerful directory structures could be. It does require clever key management and some extra cryptographic primitives but it prooves usefulnes of such structure. We could probably come up with a lot more examples like this. I wouldn’t be myself though if I wouldn’t first bring some problems that can easily arise with directory blobs.&lt;/p&gt;
+&lt;p&gt;This is just an example of how powerful directory structures could be. It does require clever key management and some extra cryptographic primitives but it prooves usefulnes of such structure. We could probably come up with a lot more examples like this. Nevertheless, I wouldn’t be myself if I wouldn’t first bring some problems that can easily arise with directory blobs.&lt;/p&gt;
 
 &lt;h1 id=&quot;fat-dir&quot;&gt;Fat dir&lt;/h1&gt;
 

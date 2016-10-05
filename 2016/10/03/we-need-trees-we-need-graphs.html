@@ -120,13 +120,13 @@
 
 <p>Although it looks like the graph we can form with our blob should be acyclic, this should not be relied on. In a situation where we don’t have encryption, cyclic graph would be almost impossible to calculate - contents of directory blobs would indirectly depend on their own hashes so cryptographic hash function would have to expose some special properties allowing us to create such cycle. This though would be against properties of strong cryptographic hash functions.</p>
 
-<p>As soon as we introduce encrypted blobs, the case may be more complicated. Even though the contents of a directory blob would be dependent on it’s hash, we can still tweak the encryption key. It could be likely that the contents of encrypted blob (that’s what we would use to get the hash from) could be tweaked through encryption key so that it matches expected result. A correct proof would definitely help here (maybe in some future blog post) but right now I’d say we would have to assume those graphs could be cyclic too</p>
+<p>As soon as we introduce encrypted blobs, the case may be more complicated. Even though the contents of a directory blob would be dependent on it’s hash, we can still tweak the encryption key. It could be likely that the contents of encrypted blob (that’s what we would use to get the hash from) could be tweaked through encryption key so that it matches expected result. A correct proof would definitely help here (maybe in some future blog post) but right now I’d say we would have to assume those graphs could be cyclic too.</p>
 
-<p>Later we’ll also introduce something called dynamic links which would let us trivially add cycles. What this means is that applications that would like to trace the graph would have to add some protection agains recursivity level to prevent hangs or stack overflows.</p>
+<p>Later we’ll also introduce something called dynamic links which would let us trivially add cycles. What this means is that applications that would like to trace the graph would have to add some protection against recursivity level to prevent hangs or stack overflows.</p>
 
 <h1 id="metadata">Metadata</h1>
 
-<p>In addition to filename, given blob may have many more properties. A good example of those would be: blog’s mime type, creation date, author, expiry date. Since the list of properties could be dynamically adjusted for every blob, it’s best to keep them in a dynamic map per each object.</p>
+<p>In addition to filename, given blob may have many more properties. A good example of those would be: blob’s mime type, creation date, author, expiry date. Since the list of properties could be dynamically adjusted for every blob, it’s best to keep them in a dynamic map per each object.</p>
 
 <p>There’s one special property needed for every blob if they are encrypted - <code>key info</code>. This data would have to contain enough information to create encryption key for given blob. A natural location for such property would be blob’s metadata.</p>
 
@@ -170,7 +170,7 @@
 
 <p>In order for this to work, first and the most important rule is that we must keep <code>Key lvl1</code> for ourselves - that’s to protect the information that’s private.</p>
 
-<p><code>Key lvl2</code> must be shared with our friends. Friend relationships are mostlikely associated with some communication channel between users so it should be utilized to exchange <code>Key lvl2</code> information.</p>
+<p><code>Key lvl2</code> must be shared with our friends. Friend relationships are most likely associated with some communication channel between users so it should be utilized to exchange <code>Key lvl2</code> information.</p>
 
 <p>Giving keys to friends of our friends is a bit tricky though. We don’t have access nor we manage friend relationship of our friends so granting lvl3 key must be handled through some indirection we can controll. In order to see a solution to this problem, let’s picture multiple users and their keys (I’ve removed unimportant parts):</p>
 
@@ -182,7 +182,7 @@
 
 <p>This of course requires <code>User2</code> to manage this extra blob with keys. But this should be no more complicated than establishing friend relationship itself. I can bet that the final implementation will be much more complicated and will include some assymetric crypto, but I hope it shows generic idea.</p>
 
-<p>This is just an example of how powerful directory structures could be. It does require clever key management and some extra cryptographic primitives but it prooves usefulnes of such structure. We could probably come up with a lot more examples like this. I wouldn’t be myself though if I wouldn’t first bring some problems that can easily arise with directory blobs.</p>
+<p>This is just an example of how powerful directory structures could be. It does require clever key management and some extra cryptographic primitives but it prooves usefulnes of such structure. We could probably come up with a lot more examples like this. Nevertheless, I wouldn’t be myself if I wouldn’t first bring some problems that can easily arise with directory blobs.</p>
 
 <h1 id="fat-dir">Fat dir</h1>
 
