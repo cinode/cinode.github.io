@@ -110,9 +110,9 @@
 
 <p>Let’s solve the “puzzle” from last post, shall we?</p>
 
-<p>The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn’t check whether it’s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</p>
+<p>The issue was with the trust level. The code basically assumed that the storage layer being a memory, filesystem or a remote web server is trustworthy. When the data was read back from datastore, the code didn’t check whether it’s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</p>
 
-<p>We could argue about the in-memory implmenetation which should be secure as long as someone doesn’t mess up with the memory of our process (sometimes <a href="https://en.wikipedia.org/wiki/Data_degradation">it happens</a> unintentionally). But when files are stored on the local HDD, it’s much easier to alter them. The least secure of all three implementations was the web connector one. Connecting it to a bogus server would basically break our security since any blob could be replaced with anything else.</p>
+<p>We could argue about the in-memory implmentation which should be secure as long as someone or something doesn’t mess up with the memory of our process (sometimes <a href="https://en.wikipedia.org/wiki/Data_degradation">it happens</a> unintentionally). But when files are stored on the local HDD, it’s much easier to alter them. The least secure of all three implementations was the web connector one. Connecting it to a bogus server would basically break our security since any blob could be replaced with anything else.</p>
 
 <p>So what’s the fix? You can see all changes I made <a href="https://github.com/cinode/go/pull/9/files">here</a>, but they can be summarized as:</p>
 
@@ -146,7 +146,7 @@
       </span>
       <span style="float: right;">
         
-          <a>Next &rarr;</a>
+          <a href="/2016/10/03/we-need-trees-we-need-graphs" title="We need trees, we need graphs">Next &rarr;</a>
         
       </span>
       </nav>
