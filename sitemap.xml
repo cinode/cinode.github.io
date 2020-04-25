@@ -1,54 +1,143 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>/2016/10/03/we-need-trees-we-need-graphs</loc>
-<lastmod>2016-10-03T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/09/27/trust-noone</loc>
-<lastmod>2016-09-27T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/09/12/encrypt-em-all</loc>
-<lastmod>2016-09-12T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/08/08/refactoring-mistakes</loc>
-<lastmod>2016-08-08T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/07/26/cas-in-action</loc>
-<lastmod>2016-07-26T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/06/18/password-please</loc>
-<lastmod>2016-06-18T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/06/11/static-base</loc>
-<lastmod>2016-06-11T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/2016/06/02/humble-beginning</loc>
-<lastmod>2016-06-02T00:00:00+02:00</lastmod>
-</url>
-<url>
-<loc>/archive</loc>
-</url>
-<url>
-<loc>/categories</loc>
-</url>
-<url>
-<loc>/</loc>
-</url>
-<url>
-<loc>/pages</loc>
-</url>
-<url>
-<loc>/tags</loc>
-</url>
-<url>
-<loc>/404.html</loc>
-<lastmod>2016-07-25T00:33:24+02:00</lastmod>
-</url>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="http://example.org/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://example.org/post/2016-10-03-we-need-trees-we-need-graphs/</loc>
+    <lastmod>2016-10-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-09-27-trust-noone/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-09-12-encrypt-em-all/</loc>
+    <lastmod>2016-09-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-08-08-refactoring-mistakes/</loc>
+    <lastmod>2016-08-08T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-07-26-cas-in-action/</loc>
+    <lastmod>2016-07-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-06-18-password-please/</loc>
+    <lastmod>2016-06-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-06-11-static-base/</loc>
+    <lastmod>2016-06-11T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/2016-06-02-humble-beginning/</loc>
+    <lastmod>2016-06-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/categories/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/</loc>
+    <lastmod>2016-10-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/post/</loc>
+    <lastmod>2016-10-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/bugfix/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/design/</loc>
+    <lastmod>2016-06-18T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/encryption/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/golang/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/programming/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/prototype/</loc>
+    <lastmod>2016-09-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/refactoring/</loc>
+    <lastmod>2016-08-08T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.org/tags/storage/</loc>
+    <lastmod>2016-08-08T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
 </urlset>
