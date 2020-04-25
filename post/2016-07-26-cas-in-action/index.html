@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>CAS in action - Cinode dev blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="BYO" /><meta name="description" content="Let&#39;s see some first code. In this post I&#39;ll show you a prototype implementation of CAS layer." /><meta name="keywords" content="Cinode, privacy, secrecy, decentralized, distributed" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with theme even" />
+
+
+<link rel="canonical" href="http://example.org/post/2016-07-26-cas-in-action/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="CAS in action" />
+<meta property="og:description" content="Let&#39;s see some first code. In this post I&#39;ll show you a prototype implementation of CAS layer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/post/2016-07-26-cas-in-action/" />
+<meta property="article:published_time" content="2016-07-26T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-07-26T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="CAS in action">
+<meta itemprop="description" content="Let&#39;s see some first code. In this post I&#39;ll show you a prototype implementation of CAS layer.">
+
+
+<meta itemprop="datePublished" content="2016-07-26T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-07-26T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1393">
+
+
+
+<meta itemprop="keywords" content="golang,programming,storage,prototype," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CAS in action"/>
+<meta name="twitter:description" content="Let&#39;s see some first code. In this post I&#39;ll show you a prototype implementation of CAS layer."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Cinode</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Cinode</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">CAS in action</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-07-26 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#tough-decisions">Tough decisions</a></li>
+<li><a href="#let-s-have-some-baseline">Let&rsquo;s have some baseline</a></li>
+<li><a href="#cas-interface">CAS interface</a></li>
+<li><a href="#let-s-make-it-practical">Let&rsquo;s make it practical</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="tough-decisions">Tough decisions</h1>
+
+<p>Before I jump to description of the code itself, let&rsquo;s first clarify what
+technology I&rsquo;ll be using to write Cinode prototype. I decided to use
+<a href="https://golang.org/">golang</a>. I find it rather nice to work with but it also
+has some thorns here and there. Why would I like to use it then? It turns out to
+be very practical, especially in the field of network services. Goroutines are
+just great - no need to think in terms of callbacks anymore, just straight,
+sequential code.</p>
+
+<p>Golang also has everything we&rsquo;ll need to build the prototype - all crypto
+primitives and nice toolset for a http-based services. I don&rsquo;t expect this
+prototype to be a performance rocket but the speed that golang would give us
+should be enough.</p>
+
+<p>I must also admit that I don&rsquo;t yet care to much about cross-process memory
+safety. There will be a lot of keys and passphrases in the memory but we don&rsquo;t
+want to protect against attacker who can read that, it&rsquo;s still a prototype,
+right? Keeping that in mind, golang is just a perfect match here.</p>
+
+<p>I&rsquo;ll be developing on Linux platform - that&rsquo;s my primary OS but I&rsquo;ll try not to
+use any os-specific constructs. Of course I strongly recommend Linux for any
+project dealing with network, especially if it supports our freedom. But I won&rsquo;t
+force you to use it. Freedom to choose what you want is something I do respect.
+If for some reason this project won&rsquo;t work well on other OS-es, please keep in
+ming that this wasn&rsquo;t intentional. I also kindly ask you to <a href="https://github.com/cinode/go/issues/new">let me know about
+it</a>.</p>
+
+<p>To avoid such OS misbehavior and to have good quality of the codebase, I&rsquo;ll do
+test driven development, maybe not in it&rsquo;s strict sense, but my goal is to have
+everything well tested. Golang has very good support for testing and coverage
+reports so we&rsquo;ll save some time to setup correct tools.</p>
+
+<p>The source code will be stored in <a href="https://github.com/cinode/go">github
+repository</a>, tests will be done through <a href="https://travis-ci.org/cinode/go">Travis
+CI</a>. Coverage analysis will be done using
+<a href="https://coveralls.io/github/cinode/go">Coveralls</a>. I decided to use those tools
+to get most of the stuff running up quickly. Even though I had some initial
+issues with setting everything up, the time win is huge here. Besides, having
+everything public in public tools creates higher pressure to keep high level of
+quality from the beginnig.</p>
+
+<h1 id="let-s-have-some-baseline">Let&rsquo;s have some baseline</h1>
+
+<p>Before any serious code was put down, I&rsquo;ve set few rules I wanted to follow:</p>
+
+<ul>
+<li>Build clean layered architecture - split the system into layers (matching<br />
+Cinode&rsquo;s design). Each layer should be a separate module with it&rsquo;s own
+namespace in go.</li>
+<li>Each module must have a clear set of interfaces it provides to communicate
+with other modules and application code.</li>
+<li>Each module&rsquo;s interface must have apriopriate set of test cases covering
+all interface methods</li>
+<li>For each module there should be a reference implementation of it&rsquo;s
+interfaces - such implementation does not have to store data permanently
+between sessions. It will be used during testing as a reference behavior of
+the interface.</li>
+<li>If there are multiple implemetnations of the module interfce, all interface
+tests must be executed on all interface implementations and pass cleanly.
+Additional tests should be used to cover corner cases of specific interface
+implementations.</li>
+<li>I opt for high code coverage from the beginning. Although it does not prove
+that the code is bug-free, it would at least ensure most of code paths were
+executed while testing.</li>
+</ul>
+
+<p>Enough of boring talk, let&rsquo;s have some code!</p>
+
+<h1 id="cas-interface">CAS interface</h1>
+
+<p>I first started with <a href="https://github.com/cinode/go/blob/v2016-07-29/cas/interface.go">draft
+interface</a>. In
+CAS we need some obvious functionality: uploading blob and downloading existing
+one. We also need to delete existing blob and check if one does exist. I also
+knew I wouldn&rsquo;t use buffers to specify data of blobs, streams would fit much
+better here - that way we can put and get blobs of arbitrary size without
+worrying about the amount of consumed memory.</p>
+
+<p>I started with a trivial implementation that was storing data <a href="https://github.com/cinode/go/blob/v2016-07-29/cas/memory.go">inside
+memory</a>. It was my
+base when I was writing <a href="https://github.com/cinode/go/blob/v2016-07-29/cas/interface_test.go">interface
+tests</a>.</p>
+
+<p>Once I felt I have enough of the interface covered, I started working on
+more practical implementation storing data on <a href="https://github.com/cinode/go/blob/v2016-07-29/cas/filesystem.go">local
+filesystem</a>.
+During implementation I also made small change to the interface - I split
+uploading blob into two separate functions. First would be used to upload blob
+when it&rsquo;s name is known - such uplaod would fail if name does not match the
+contents. I also made an alternative method where we only give data and get the
+calculated name back.</p>
+
+<p>When everything was up and running I wanted to add one more functionality to the
+module. In order to make first usable application I wanted to let us play with
+cas using plain web browser. For this purpose I made <a href="https://github.com/cinode/go/blob/v2016-07-29/cas/webinterface.go">web
+interface</a>.
+It&rsquo;s purpose is to take any implementation of CAS interface and some
+configuration and expose CAS functionality through http. Implementation worked
+like a charm. It is very simple and follows REST design:</p>
+
+<ul>
+<li>GET reads a blob</li>
+<li>POST uploads new blob if we don&rsquo;t know the name</li>
+<li>PUT uploads blob if we know the name</li>
+<li>DELETE removea blob</li>
+<li>HEAD finds out if blob exists</li>
+</ul>
+
+<p>Initially POST and PUT were taking raw post data as post body. I extended it
+later to also support mnultipart/form-data content types to allow uploading from
+HTML form.</p>
+
+<p>Once the Web Interface was ready, I needed an easy way to test it. What would
+perfectly make sense here is a new implementation of CAS interface that talks to
+some remotely available Web backend with compatible protocol (so a web
+interface). Once I did it I could use common interface testing code. Tests were
+run on CAS implementation which connected to local web interface. This web
+interface on then was attached to local memory-based implementation.</p>
+
+<h1 id="let-s-make-it-practical">Let&rsquo;s make it practical</h1>
+
+<p>Ok, we have all those blocks of code but none of them is any useful standalone
+application yet. Just bunch of code inside cas library which can&rsquo;t be used
+without writing some go code. We can expose CAS through HTTP, so I created a
+<a href="https://github.com/cinode/go/blob/v2016-07-29/cas/cmd/cinode_cas_fileserver/main.go">simple
+application</a>
+that exposes data from a local directory (so filesystem-based CAS
+implementation) in a form of a simple web server. Let&rsquo;s give it a try:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># Fetch and compile server binary</span>
+go install github.com/cinode/go/cas/cmd/cinode_cas_fileserver
+
+<span class="c1"># Start the server, configuration is passed through environmental variables</span>
+<span class="nv">CN_CAS_LISTEN_ADDR</span><span class="o">=</span><span class="m">127</span>.0.0.1:8080 <span class="se">\
+</span><span class="se"></span><span class="nv">CN_CAS_DATA_FOLDER</span><span class="o">=</span>/tmp/cinode/ <span class="se">\
+</span><span class="se"></span>  <span class="nv">$GOPATH</span>/bin/cinode_cas_fileserver</code></pre></td></tr></table>
+</div>
+</div>
+<p>In a separate shell:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># Upload some data blob (extra echo needed since CAS server doesn&#39;t output</span>
+<span class="c1"># newline character)</span>
+curl -d <span class="s2">&#34;Hello world!&#34;</span> http://127.0.0.1:8080/<span class="p">;</span> <span class="nb">echo</span>
+<span class="c1"># Will output: XB5P3GWTHnHTud55BijFsGmBjHZtwtc44es4HsZnqMGM</span>
+
+<span class="c1"># Download the blob (extra echo needed for reasons same as above)</span>
+curl http://127.0.0.1:8080/XB5P3GWTHnHTud55BijFsGmBjHZtwtc44es4HsZnqMGM<span class="p">;</span> <span class="nb">echo</span>
+<span class="c1"># Will output: Hello world!</span>
+
+<span class="c1"># Upload some file</span>
+<span class="nb">echo</span> <span class="s2">&#34;Hello world from a file&#34;</span> &gt; /tmp/upload_file.txt
+curl --form <span class="s2">&#34;fileupload=@/tmp/upload_file.txt;filename=file.txt&#34;</span> <span class="se">\
+</span><span class="se"></span>  http://127.0.0.1:8080/<span class="p">;</span> <span class="nb">echo</span>
+<span class="c1"># Will output: WHa8NVuf1RfUVrqsyqmo2Vh1xyuVTqJqJePhjSxHwZmy</span>
+
+<span class="c1"># Download the blob (no need for extra echo since the uploaded file had newline)</span>
+curl http://127.0.0.1:8080/WHa8NVuf1RfUVrqsyqmo2Vh1xyuVTqJqJePhjSxHwZmy
+<span class="c1"># Will output: Hello world from a file</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>A small note about those strange blob names - they don&rsquo;t look like hex string
+nor base64-encoded values. Instead I decided to use
+<a href="https://en.wikipedia.org/wiki/Base58">Base58</a> - it&rsquo;s commonly used in BitCoin
+and encodes any binary data to a string that always consists of alphanumeric
+characters - a perfect selection if we don&rsquo;t want to deal with encoding
+incompatibilities in the future. This encoding may not be very fast but our blob
+names are not that long anyway.</p>
+
+<p>Ok, once we have a web server and can upload some data into it, maybe we should
+make some more practical use of it? First let&rsquo;s try to use CAS as a storage for
+html pages:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">curl -d <span class="s1">&#39;&lt;!doctype html&gt;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world!&lt;/h1&gt;&lt;/html&gt;&#39;</span> <span class="se">\
+</span><span class="se"></span>  http://127.0.0.1:8080/<span class="p">;</span> <span class="nb">echo</span>
+<span class="c1"># Will output: QH9EmJveKGD1ppUgDVjBqZ8XKw4crBuSNHApgjK9RbgR</span>
+
+<span class="c1"># Open in web browser</span>
+x-www-browser http://127.0.0.1:8080/QH9EmJveKGD1ppUgDVjBqZ8XKw4crBuSNHApgjK9RbgR</code></pre></td></tr></table>
+</div>
+</div>
+<p>I also made a simple dataset with html that lets you upload files directly from the web browser:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">git clone https://github.com/cinode/testdata-cas-filesystem.git /tmp/test-data
+<span class="nb">cd</span> /tmp/test-data
+git checkout v2016-07-29
+<span class="nv">CN_CAS_LISTEN_ADDR</span><span class="o">=</span><span class="m">127</span>.0.0.1:8080 <span class="se">\
+</span><span class="se"></span><span class="nv">CN_CAS_DATA_FOLDER</span><span class="o">=</span>/tmp/test-data/ <span class="se">\
+</span><span class="se"></span>  <span class="nv">$GOPATH</span>/bin/cinode_cas_fileserver</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">x-www-browser http://127.0.0.1:8080/bR9AEqo79uoYLoGx2Xf1JViBbTz5aZWBy9qkHMZxeWYM</code></pre></td></tr></table>
+</div>
+</div>
+<p>That&rsquo;s it for today. Apart from CAS there&rsquo;s still an encryption layer to be implemented. I hope to cover it in next post.</p>
+
+<p>Bye</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">BYO</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-07-26
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/programming/">programming</a>
+          <a href="/tags/storage/">storage</a>
+          <a href="/tags/prototype/">prototype</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-08-08-refactoring-mistakes/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Refactoring mistakes</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2016-06-18-password-please/">
+            <span class="next-text nav-default">Password please</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://example.org/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">BYO</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

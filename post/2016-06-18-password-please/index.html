@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Password please - Cinode dev blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="BYO" /><meta name="description" content="Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&amp;rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&amp;rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce)." /><meta name="keywords" content="Cinode, privacy, secrecy, decentralized, distributed" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with theme even" />
+
+
+<link rel="canonical" href="http://example.org/post/2016-06-18-password-please/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Password please" />
+<meta property="og:description" content="Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/post/2016-06-18-password-please/" />
+<meta property="article:published_time" content="2016-06-18T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-06-18T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Password please">
+<meta itemprop="description" content="Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce).">
+
+
+<meta itemprop="datePublished" content="2016-06-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-06-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1942">
+
+
+
+<meta itemprop="keywords" content="design,encryption,storage," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Password please"/>
+<meta name="twitter:description" content="Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce)."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Cinode</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Cinode</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Password please</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-06-18 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#good-keys-bad-keys">Good Keys, bad keys</a></li>
+<li><a href="#randomize-everything">Randomize everything</a></li>
+<li><a href="#derived-deterministic-keys">Derived Deterministic keys</a></li>
+<li><a href="#derived-nondeterministic-keys">Derived Nondeterministic Keys</a></li>
+<li><a href="#other-options">Other options</a></li>
+<li><a href="#transparent-transport">Transparent transport</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="good-keys-bad-keys">Good Keys, bad keys</h1>
+
+<p>When using encryption, good
+<a href="https://en.wikipedia.org/wiki/Key_(cryptography)">encryption keys</a> are
+essential. They must be generated randomly and must contain enough entropy.
+Otherwise we&rsquo;ll open wide range of attacks on encrypted data.
+In addition to the key, we also need
+<a href="https://en.wikipedia.org/wiki/Initialization_vector">Initialization Vector</a>
+(IV) which doesn&rsquo;t necessarily have to be secret, but still it should be either
+pseudorandom or (in case of some encryption primitives) just unique when used
+together with the same key (IV is then also called a nonce).</p>
+
+<p>We would like to apply encryption to our data blobs. Just to briefly recall,
+our blobs are static, can not chagnge. Every blob has it&rsquo;s own uinque name.
+This name is made of cryptographically secure hash of blob&rsquo;s data. This
+hash also guarantees integrity of the information.</p>
+
+<h1 id="randomize-everything">Randomize everything</h1>
+
+<p>So, what would be the most trivial way of generating keys and IV.</p>
+
+<p>If keys should be random, and random IVs are also a good choice, why not just
+randomly generate key for every blob? For AES-256 we would have to generate
+more than 2^128 blobs (due to
+<a href="https://en.wikipedia.org/wiki/Birthday_problem">birthday paradox</a>) to reuse key
+with probbility of ~0.5, so even if we use always the same IV and nonce-based
+encryption primitives, we&rsquo;re still pretty safe.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                            :
+                            :
++----------------+ Encrypt  :          +----------------+
+|                +----*-*-------------&gt;|                |
+|                |    ^ ^   :          |                |
+| Plaintext data |    | |   :          | Encrypted data |
+|                |    : :   :  Decrypt |                |
+|                |&lt;-------------*-*----+                |
++----------------+    | |   :   ^ ^    +----+-----------+
+                      | |   :   | |         |
+                      | |   :   | |         |            +---------+
+                      *-+-------+ |         +---HASH----&gt;|Blob name|
+                      | |   |     |                      +---------+
+                      | +---------*
++----------------+    |     :     |
+|                |    |     :     |    +----------+
+| Random source  +-=--+     :     +-=--+ Constant |
+|                |  Key     :     IV   +----------+
++----------------+          :  
+                            :  
+                            :  
+                            :  
+                  &lt; PRIVATE : PUBLIC &gt;
+                            :  </pre></td></tr></table>
+</div>
+</div>
+<p>What would be properties of such solution:</p>
+
+<ul>
+<li>Every blob has unique key</li>
+<li>IV can be hardcoded for nonce-based encryption modes since we&rsquo;re changing
+key for every blob</li>
+<li>One blob encrypted twice will generate different key and different encrypted
+blob</li>
+</ul>
+
+<p>All those properties may be both advantages and disadvantages.
+Uniqueness of the key does guarantee high security but would require management
+of such keys and won&rsquo;t let us initilize the cipher once and reuse for multiple
+blobs.</p>
+
+<p>Let&rsquo;s take a look at the fact that reencryption will use different key - one
+benefit of this approach is that if two
+people encrypt the same data, keys will be different and the encrypted blob data
+will be different too. The only thing equal would be the size of blob (which
+can be handled by some clever splitting and merging of data). Overall this could
+look like a good solution. But it has one drawback - it does take away
+deduplication which is natural in case of CAS systems. We could argue that
+it&rsquo;s not that needed and I agree. But in case you would be uploading your own files,
+finding duplicates could would be useful. Also in case of public data or data
+shared among many peole it&rsquo;s better to have same keys for same blobs. This would
+reduce unnecesary duplicates of data and help reducing maintenance costs - less
+data to manage is always easier to manage and scale.</p>
+
+<h1 id="derived-deterministic-keys">Derived Deterministic keys</h1>
+
+<p>Ok, let&rsquo;s try the opposite side - let&rsquo;s try to assign a key to a blob in such
+way that each key can be unambigously assigned to it&rsquo;s blob.</p>
+
+<p>Key must be random. One way to build pseudorandom number generator is to <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function#Use_in_building_other_cryptographic_primitives">use
+cryptographic hash</a>,
+because cryptographic hash function should behave similarly to random function.
+So why not just use the hash of blobs contents and use this hash as a key?
+IV could be handled as before. For every blob we still use different key
+so similarly to just random keys we can use predefined one for all our
+cases (as long as we&rsquo;re using nonce-based encryption primitives of course).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                            :
+                            :
++----------------+ Encrypt  :          +----------------+
+|                +----*-*-------------&gt;|                |
+|                |    ^ ^   :          |                |
+| Plaintext data |    | |   :          | Encrypted data |
+|                |    : :   :  Decrypt |                |
+|                |&lt;-------------*-*----+                |
++-------+--------+    | |   :   ^ ^    +----+-----------+
+        |             | |   :   | |         |
+        |             | |   :   | |         |            +---------+
+        H             *-+-------+ |         +---HASH----&gt;|Blob name|
+        A             | |   |     |                      +---------+
+        S             | +---------*
+        H             |     :     |
+        |  +-----+    |     :     |    +----------+
+        +-&gt;| Key |-=--+     :     +-=--+ Constant |
+           +-----+          :     IV   +----------+
+                            :  
+                            :  
+                            :  
+                            :  
+                  &lt; PRIVATE : PUBLIC &gt;
+                            :  </pre></td></tr></table>
+</div>
+</div>
+<p>What properties would we get here:</p>
+
+<ul>
+<li>Every blob has unique key</li>
+<li>IV can be hardcoded for nonce-based encryption modes since we&rsquo;re changing
+key for every blob</li>
+<li>Every blob of data will have exactly one key assigned and same representation
+of encrypted data</li>
+</ul>
+
+<p>First two points are equal to the previous case. The third one is the
+opposite so let&rsquo;s take a closer look.</p>
+
+<p>Now we are able to introduce global deduplication mechanism. If two people upload
+same data to one CAS, those uploads would be identical. Such blobs would share
+keys, IVs and encrypted representation. This could mean significant reduction
+of space usage and may significantly reduce network costs. But it does reveal an
+extra information to external observer. If the observer finds out that Alice and
+Bob uploaded same blob, he would be able to assume that they have access to same
+peace of unencrypted information. In case Alice does protect her environment well
+and is able to fight off all attacks, attacker may also try to attack Bob. If
+Bob is not that good protecting himself, the attacker may gain plain data that
+was shared between Alice nad Bob.</p>
+
+<p>Pretty nasty, right? We could try to reduce the proof of possesion here by
+enforcing Alice&rsquo;s environment to also store some blobs she don&rsquo;t have keys to.
+But if we&rsquo;d like to ensure that possession of encrypted data does not mean
+possession of unencrypted one, the percentage of data Alice stores and is able
+to decrypt would have to be really low.</p>
+
+<p>When such storage overkill could be practical? One case that comes to my mind
+is when Alice would provide storage services to Bob and many other people and
+keep backups of their encrypted blobs. Sounds like a good idea to explore in the
+future, I still see many potential risks here though.</p>
+
+<h1 id="derived-nondeterministic-keys">Derived Nondeterministic Keys</h1>
+
+<p>There&rsquo;s a simple method though to keep some benefits of deduplication and still
+provide security against blob corelation between users.</p>
+
+<p>What if we would be able to securely generate keys from blob&rsquo;s contents but
+those keys would be deterministic for one user only? To do that we need one more
+thing - something that would represent user&rsquo;s identity. One of obvious answers
+here is to use assymetric keys.</p>
+
+<p>Private key in assymetric crypto can be used to sign the message. Signing
+different messages will produce different result and common low-level crypto
+primitives yield same sign for the same data (they are
+<a href="https://en.wikipedia.org/wiki/Pure_function">pure functions</a>).
+If the sign has enough entropy
+for being good key source (and it has to, otherwise we would be able to fake
+signs), we can apply key derivation function on it to build the encryption key.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                             :
+                             :
+ +----------------+ Encrypt  :          +----------------+
+ |                +----*-*-------------&gt;|                |
+ |                |    ^ ^   :          |                |
+ | Plaintext data |    | |   :          | Encrypted data |
+ |                |    : :   :  Decrypt |                |
+ |                |&lt;-------------*-*----+                |
+ +-------+--------+    | |   :   ^ ^    +----+-----------+
+         |             | |   :   | |         |
+         v             | |   :   | |         |           +---------+
+     +=------+         *-+-------+ |         +---HASH---&gt;|Blob name|
+  +-&gt;| Sign  |         | |   |     |                     +---------+
+  |  +-------+         | +---------*
+  |      |             |     :     |
+  |      v             |     :     |
+  |   +=----+          |     :     |
+  |   | KDF |          |     :     |
+  |   +--+--+          |     :     |
+  |      |  +-----+    |     :     |    +----------+
+  |      +-&gt;| Key |-=--+     :     +-=--+ Constant |
+  |         +-----+          :     IV   +----------+
+  |                          :  
++-+----------------+         :  
+| Private User Key |         :  
++------------------+         :  
+                             :  
+                   &lt; PRIVATE : PUBLIC &gt;
+                             :  </pre></td></tr></table>
+</div>
+</div>
+<p>This structure has few really nice properties:</p>
+
+<ul>
+<li>Every blob has unique key</li>
+<li>IV can be hardcoded for nonce-based encryption modes since we&rsquo;re changing
+key for every blob</li>
+<li>Two user private keys will generate diferent encryption key for same
+plaintext data</li>
+<li>Same user will generate same key and same encrypted data for same plaintext
+data</li>
+<li>Encryption key is indistinguishable from random key for someone who doesn&rsquo;t
+have access to private user key</li>
+</ul>
+
+<p>Ok, so we see that keys will be unique but only when using same private key.
+But I&rsquo;d like to take a look at the last property - indistinguishibility from
+random. This could be really useful in some cases. Let&rsquo;s say someone publishes
+some important information using this key generation method. Published blob
+would first look like the one using random key. If someone would later require
+a proof of authenticity of this data, the published can publish the sign of
+this blob. Such sign would a) produce encryption key for the blob when put
+through KDF and b) the sign would prove that the blob was generated with person
+in possession of the private key.</p>
+
+<p>Now there&rsquo;s a property of deniability here. If the sign is not published, there&rsquo;s
+no way to connect it with the publisher. Whether it would prove itself useful,
+I don&rsquo;t know yet but it&rsquo;s good to have such ideas for later.</p>
+
+<h1 id="other-options">Other options</h1>
+
+<p>We could also find few other methods to generate keys here. We could for example
+generate one global encryption key for the user and for every blob use IV being
+a hash of blob&rsquo;s unencrypted contents. We could also build keys by hashing
+blob&rsquo;s content with some prefix and suffix. But in general we can divide
+our methods into three groups:</p>
+
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Dedupliation</th>
+<th>Good usage</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Random</td>
+<td>None</td>
+<td>Highly confidential data</td>
+</tr>
+
+<tr>
+<td>Derived Deterministic</td>
+<td>Global</td>
+<td>Published data</td>
+</tr>
+
+<tr>
+<td>Derived Nondeterministic</td>
+<td>Local</td>
+<td>Backup with deduplication</td>
+</tr>
+</tbody>
+</table>
+
+<p>I don&rsquo;t see that any of different key generation schemes should be preffered.
+Instead I think key generation should be adjusted to blob usage. If it would
+become public at some point, key derived from contents is the best way to go.
+Mixing it with private key signing does allow extra identity proof. Using purely
+random keys could also be useful if you&rsquo;d like to hide the fact of possession of
+shared data. A robust system should enable them all.</p>
+
+<h1 id="transparent-transport">Transparent transport</h1>
+
+<p>You could already have noted that no matter what key encryption do we use, it
+is not relevant from the point of view of CAS itself. As long as there are no
+plaintext keys sent to storage system, it doesn&rsquo;t have access to plaintext data.</p>
+
+<p>Such storage is able to do some basic verification of the blob though.
+If user has to upload blob along with it&rsquo;s name, such blob can be rejected
+if the name does not match the contents. It&rsquo;s pretty nice property since even
+without the knowledge of plaintext data, the storage system can do a basic
+integrity verification preventing transfer of malformed data.</p>
+
+<p>That&rsquo;s it for this day. Hope to write something more soon.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">BYO</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-06-18
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/design/">design</a>
+          <a href="/tags/encryption/">encryption</a>
+          <a href="/tags/storage/">storage</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-07-26-cas-in-action/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">CAS in action</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2016-06-11-static-base/">
+            <span class="next-text nav-default">Static base</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://example.org/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">BYO</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

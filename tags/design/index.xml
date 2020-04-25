@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>design on Cinode dev blog</title>
+    <link>http://example.org/tags/design/</link>
+    <description>Recent content in design on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 18 Jun 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/design/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Password please</title>
+      <link>http://example.org/post/2016-06-18-password-please/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-06-18-password-please/</guid>
+      <description>Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&amp;rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&amp;rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce).</description>
+    </item>
+    
+    <item>
+      <title>Static base</title>
+      <link>http://example.org/post/2016-06-11-static-base/</link>
+      <pubDate>Sat, 11 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-06-11-static-base/</guid>
+      <description>Let&amp;rsquo;s talk about blobs Computers understand bits, bits form bytes. Bytes can be ordered into sequence: we end up having blocks of data, blobs. We store them in various places. Running program will need some data inside memory, other part of it will be saved on disk. Some data will be downloaded from servers, CPU will keep some blobs inside it&amp;rsquo;s cache. We can put dozens of examples here, but what this shows is that being so fundamental in computer science, proper data blob management is the key to good application environment.</description>
+    </item>
+    
+  </channel>
+</rss>

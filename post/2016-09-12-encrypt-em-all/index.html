@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Encrypt &#39;em all - Cinode dev blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="BYO" /><meta name="description" content="Let&#39;s apply encryption to our data." /><meta name="keywords" content="Cinode, privacy, secrecy, decentralized, distributed" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with theme even" />
+
+
+<link rel="canonical" href="http://example.org/post/2016-09-12-encrypt-em-all/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Encrypt &#39;em all" />
+<meta property="og:description" content="Let&#39;s apply encryption to our data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/post/2016-09-12-encrypt-em-all/" />
+<meta property="article:published_time" content="2016-09-12T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-09-12T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Encrypt &#39;em all">
+<meta itemprop="description" content="Let&#39;s apply encryption to our data.">
+
+
+<meta itemprop="datePublished" content="2016-09-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-09-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1021">
+
+
+
+<meta itemprop="keywords" content="golang,programming,encryption,prototype," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Encrypt &#39;em all"/>
+<meta name="twitter:description" content="Let&#39;s apply encryption to our data."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Cinode</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Cinode</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Encrypt &#39;em all</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-09-12 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#another-step-in-the-implementation-journey">Another step in the implementation journey</a></li>
+<li><a href="#general-idea">General idea</a></li>
+<li><a href="#ciphers">Ciphers</a></li>
+<li><a href="#keygens">KeyGens</a></li>
+<li><a href="#tricky-buffer">Tricky buffer</a></li>
+<li><a href="#not-all-done-yet">Not all done yet</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="another-step-in-the-implementation-journey">Another step in the implementation journey</h1>
+
+<p>This time we&rsquo;ll take a look at <a href="https://github.com/cinode/go/tree/v2016-09-12/blenc">the implementation of blob encryption layer</a>. Just before we start I give you one puzzle to solve - there&rsquo;s one serious security flow in   current implementation. I wonder if you&rsquo;ll be able to spot it. I plan to  show and fix it in the next post.</p>
+
+<h1 id="general-idea">General idea</h1>
+
+<p>Blob encryption will be another layer of code, separate from the fist one - datastore. To keep it isolated, it will have it&rsquo;s own namespace: blenc. (Yup, I was too lazy to come up with a better name ;))</p>
+
+<p>What would be the purpose of this layer? It will handle three major operations:</p>
+
+<ol>
+<li>Encrypt data</li>
+<li>Decrypt data</li>
+<li>Generate encryption parameters (keys, ciphers, IVs)</li>
+</ol>
+
+<p>Encryption and decryption is pretty obvious here: on the one end of the layer we&rsquo;ll be talking in plain text, on the other side we&rsquo;ll only see the encrypted stuff.</p>
+
+<p>This layer also handles selection of ciphers and their parameters. Since we&rsquo;re handling both cipher selection and encryption parameters in a code close to each other, it will be easier to match them correctly and avoid subtle bugs leading to security disasters.</p>
+
+<h1 id="ciphers">Ciphers</h1>
+
+<p>I decided to use stream ciphers. It simplifies implementation since no secure padding is needed to round data to block size. Also, the size of encrypted blob and the plaintext one is the same. This is both good and bad - good since we&rsquo;re not occupying more space due to encryption, bad because it reveals the size of the original data. It&rsquo;s not yet a security flow but something to think about in layers on higher levels where we can handle the issue much more efficiently.</p>
+
+<p>Currently there are two well-known ciphers supported in the code: <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L69">AES256-CTR</a> and <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L80">ChaCha20</a>. <a href="https://pl.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> was obvious for it&rsquo;s wide adoption and years of cryptoanalysis. Used with CTR mode it creates really strong stream cipher. <a href="https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant">ChaCha20</a> turns out to be good choice too. It&rsquo;s strength is in it&rsquo;s great performance (especially on mobiles where there&rsquo;s no hardware aceleration for AES). If you wonder whether anybody you know is using it in production now, take a look at <a href="https://blog.cloudflare.com/do-the-chacha-better-mobile-performance-with-cryptography/">Cloudflare</a> and <a href="https://security.googleblog.com/2014/04/speeding-up-and-strengthening-https.html">Google</a>.</p>
+
+<p>I have selected <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/cipher_factory.go#L22">ChaCha20</a> to be the default encryption cipher. I believe it has a great potential and will become more widely adopted in the world of smaller devices (IoT is just around the corner). The <a href="https://github.com/yawning/chacha20">implementation</a> you can find in go is also very fast, easily outperforming AES if no hardware acceleration is present.</p>
+
+<h1 id="keygens">KeyGens</h1>
+
+<p>Key generation was a bit tricky. First I implemented trivial key generator that always returns <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_contant.go">predefined key data</a>. Because the same IV is used for every blob, this implementation is really unsafe and fundamentally broken - it will generate the same key+IV pairs for many blobs. Because of that, the implementation is internal to the module and I use it only for testing purposes.</p>
+
+<p>Another simple implementation was a <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_random.go">random key generator</a>. It&rsquo;s almost as simple as the constant-key one but it does provide high quality random keys. As long as we&rsquo;re not relying on data deduplication, this method is the best way to generate keys.</p>
+
+<p>The last key generator I implemented in this iteration was a <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/keygenerator_contents.go">contents-based key generator</a>. It&rsquo;s purpose is to create key from the hash of blob&rsquo;s contents. It is secure because it will generate different keys for different blobs - that requirement is guaranteed by collision resistance property of cryptographic hash function. This generator is the only one so far which requires reading whole data bufer (to calculate hash) before we start encrypting it. Data source is given as only io.Reader interface - meaning we can not seek back. This forces us to store the data in some kind of temporary buffer - and this was the hardest part to implement for this key generation scheme.</p>
+
+<h1 id="tricky-buffer">Tricky buffer</h1>
+
+<p>There are few na&iuml;ve approaches to temporary buffer. First is to store everything in memory. Of course this would limit the size of blobs we could handle. Another idea is to store the data in some temporary file and then read id back. It sounds like a much better approach and has indeed been used in my implementation but if implemented incorrectly it would lead to serious security flows.</p>
+
+<p>First of all, the data stored in temporary files could accidentally be made readable by other users on the same system revealing plaintext data to them. Second, this data would end up being written down onto local filesystem and HDD - secure erasure of data is not a trivial problem and in case of flash-based memory may not be possible at all. That&rsquo;s why in my implementation I&rsquo;m storing the data in an encrypted form. The key is random and is kept inside memory only. Losing the key means losing access to the plaintext which is exactly what we need. There&rsquo;s a large encryption overhead though (3x: encrypt data when storing to temporary file, decrypt data when reading from temporary file and do the final encryption) but I believe it&rsquo;s worth it. The implementation of secure temporary buffer is <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/secure_temp_buffer.go">here</a>.</p>
+
+<p>Even if we store data encrypted on a temporary location we may still fail to protect against tempering of encrypted data - a common mistake if data integrity is not checked. To overcome this issue in my implementation, I created a <a href="https://github.com/cinode/go/blob/v2016-09-12/blenc/reader_hash_validator.go">reader validating hash of it&rsquo;s data</a>. It&rsquo;s purpose is to check if the data read through it has given hash value and reject the stream if it&rsquo;s not. Since we already have the hash of the original, unencrypted data (it will be used to generate encryption key), we can use it to check the integrity when we read back from temporary buffer.</p>
+
+<h1 id="not-all-done-yet">Not all done yet</h1>
+
+<p>I didn&rsquo;t implement everything in this layer yet. On the list of things left to do is the key generator using cyprographic signs and http interface. I leave those for some future updates - I believe enough has been implemented to move on to the next layer that would create a solid base for applications hosted in Cinode.</p>
+
+<p>See you at the next post.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">BYO</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-09-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/programming/">programming</a>
+          <a href="/tags/encryption/">encryption</a>
+          <a href="/tags/prototype/">prototype</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-09-27-trust-noone/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Trust noone</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2016-08-08-refactoring-mistakes/">
+            <span class="next-text nav-default">Refactoring mistakes</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://example.org/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">BYO</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

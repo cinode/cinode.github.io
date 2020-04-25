@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bugfix on Cinode dev blog</title>
+    <link>http://example.org/tags/bugfix/</link>
+    <description>Recent content in bugfix on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 Sep 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/bugfix/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Trust noone</title>
+      <link>http://example.org/post/2016-09-27-trust-noone/</link>
+      <pubDate>Tue, 27 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-09-27-trust-noone/</guid>
+      <description>Where things went wrong? Let&amp;rsquo;s solve the &amp;ldquo;puzzle&amp;rdquo; from last post, shall we?
+The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn&amp;rsquo;t check whether it&amp;rsquo;s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>encryption on Cinode dev blog</title>
+    <link>http://example.org/tags/encryption/</link>
+    <description>Recent content in encryption on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 Sep 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/encryption/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Trust noone</title>
+      <link>http://example.org/post/2016-09-27-trust-noone/</link>
+      <pubDate>Tue, 27 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-09-27-trust-noone/</guid>
+      <description>Where things went wrong? Let&amp;rsquo;s solve the &amp;ldquo;puzzle&amp;rdquo; from last post, shall we?
+The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn&amp;rsquo;t check whether it&amp;rsquo;s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</description>
+    </item>
+    
+    <item>
+      <title>Encrypt &#39;em all</title>
+      <link>http://example.org/post/2016-09-12-encrypt-em-all/</link>
+      <pubDate>Mon, 12 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-09-12-encrypt-em-all/</guid>
+      <description>Another step in the implementation journey This time we&amp;rsquo;ll take a look at the implementation of blob encryption layer. Just before we start I give you one puzzle to solve - there&amp;rsquo;s one serious security flow in current implementation. I wonder if you&amp;rsquo;ll be able to spot it. I plan to show and fix it in the next post.
+General idea Blob encryption will be another layer of code, separate from the fist one - datastore.</description>
+    </item>
+    
+    <item>
+      <title>Password please</title>
+      <link>http://example.org/post/2016-06-18-password-please/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-06-18-password-please/</guid>
+      <description>Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&amp;rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&amp;rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce).</description>
+    </item>
+    
+  </channel>
+</rss>

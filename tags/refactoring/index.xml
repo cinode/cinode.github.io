@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>refactoring on Cinode dev blog</title>
+    <link>http://example.org/tags/refactoring/</link>
+    <description>Recent content in refactoring on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 08 Aug 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/refactoring/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Refactoring mistakes</title>
+      <link>http://example.org/post/2016-08-08-refactoring-mistakes/</link>
+      <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-08-08-refactoring-mistakes/</guid>
+      <description>Mistake? What mistake? So far we&amp;rsquo;ve implemented CAS layer. It already looks pretty nice and has high test coverage. But I made one small mistake there. Athough CAS is currently doing what it&amp;rsquo;s supposed to do, it will have to be extended later to gain a bit of dynamic features. Using CAS name for such extended module would be misleading. That&amp;rsquo;s why it has to be renamed.
+I&amp;rsquo;ve chosen datastore for the new name.</description>
+    </item>
+    
+  </channel>
+</rss>

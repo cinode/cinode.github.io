@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Trust noone - Cinode dev blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="BYO" /><meta name="description" content="Let&#39;s fix some parts of the code that are too credulous." /><meta name="keywords" content="Cinode, privacy, secrecy, decentralized, distributed" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with theme even" />
+
+
+<link rel="canonical" href="http://example.org/post/2016-09-27-trust-noone/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Trust noone" />
+<meta property="og:description" content="Let&#39;s fix some parts of the code that are too credulous." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/post/2016-09-27-trust-noone/" />
+<meta property="article:published_time" content="2016-09-27T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-09-27T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Trust noone">
+<meta itemprop="description" content="Let&#39;s fix some parts of the code that are too credulous.">
+
+
+<meta itemprop="datePublished" content="2016-09-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-09-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="465">
+
+
+
+<meta itemprop="keywords" content="golang,programming,encryption,prototype,bugfix," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Trust noone"/>
+<meta name="twitter:description" content="Let&#39;s fix some parts of the code that are too credulous."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Cinode</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Cinode</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Trust noone</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-09-27 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#where-things-went-wrong">Where things went wrong?</a></li>
+<li><a href="#let-s-play-the-bad-guy">Let&rsquo;s play the bad guy</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="where-things-went-wrong">Where things went wrong?</h1>
+
+<p>Let&rsquo;s solve the &ldquo;puzzle&rdquo; from last post, shall we?</p>
+
+<p>The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn&rsquo;t check whether it&rsquo;s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</p>
+
+<p>We could argue about the in-memory implmenetation which should be secure as long as someone doesn&rsquo;t mess up with the memory of our process (sometimes <a href="https://en.wikipedia.org/wiki/Data_degradation">it happens</a> unintentionally). But when files are stored on the local HDD, it&rsquo;s much easier to alter them. The least secure of all three implementations was the web connector one. Connecting it to a bogus server would basically break our security since any blob could be replaced with anything else.</p>
+
+<p>So what&rsquo;s the fix? You can see all changes I made <a href="https://github.com/cinode/go/pull/9/files">here</a>, but they can be summarized as:</p>
+
+<ol>
+<li>When reading data from any public interface implementation, always check if the contents <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L33">does match given blob name</a></li>
+<li>In case of web connector, <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/webconnector.go#L90">check what name is generated when calling SaveAutoNamed</a> - it&rsquo;s to ensure the server we&rsquo;re connecting to does produce valid blob names</li>
+<li>A bonus one (not directly connected to trust problems but still being a security issue) - when comparing blob names, <a href="https://github.com/cinode/go/blob/v2016-09-27/datastore/common.go#L11">use constant-time comparision</a> - this could prevent exposure of raw blob names in case we want to hide them on higher levels</li>
+</ol>
+
+<p>After those changes, it&rsquo;s now required for the <code>datastore</code> interface to return a valid data for given blob name or fail with an error so the consumer of this interface can assume no error means valid data.</p>
+
+<h1 id="let-s-play-the-bad-guy">Let&rsquo;s play the bad guy</h1>
+
+<p>Ok, let&rsquo;s think now how the trust issue could be exploited. If we assume that the attacker has full access to the storage (i.e. access to files in case of file-based datastore), he could basically inject any contents he want to whoever is using the datastore.</p>
+
+<p>In case of plaintext data the result is pretty devastating - i.e. replacement of some javascript on a statically-served web page with a malicious version. Once the attacker can inject his own code into victim&rsquo;s computer, the fight is over.</p>
+
+<p>One may think though that if the data stored in datastore is encrypted, we&rsquo;re in a much better position, the attacker wouldn&rsquo;t be able to inject his own ciphertext without the knowledge of the key, right? Nothing further from the truth, this is known as <a href="https://en.wikipedia.org/wiki/Chosen-ciphertext_attack">chosen ciphertext attack</a>. Results could be as devastating as in case of plaintext stored in the datastore, there would be no integrity of data.</p>
+
+<p>That&rsquo;s it for today. Hope to write something more soon.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">BYO</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2016-09-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/programming/">programming</a>
+          <a href="/tags/encryption/">encryption</a>
+          <a href="/tags/prototype/">prototype</a>
+          <a href="/tags/bugfix/">bugfix</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-10-03-we-need-trees-we-need-graphs/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">We need trees, we need graphs</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2016-09-12-encrypt-em-all/">
+            <span class="next-text nav-default">Encrypt &#39;em all</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://example.org/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">BYO</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

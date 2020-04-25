@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>storage on Cinode dev blog</title>
+    <link>http://example.org/tags/storage/</link>
+    <description>Recent content in storage on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 08 Aug 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/storage/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Refactoring mistakes</title>
+      <link>http://example.org/post/2016-08-08-refactoring-mistakes/</link>
+      <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-08-08-refactoring-mistakes/</guid>
+      <description>Mistake? What mistake? So far we&amp;rsquo;ve implemented CAS layer. It already looks pretty nice and has high test coverage. But I made one small mistake there. Athough CAS is currently doing what it&amp;rsquo;s supposed to do, it will have to be extended later to gain a bit of dynamic features. Using CAS name for such extended module would be misleading. That&amp;rsquo;s why it has to be renamed.
+I&amp;rsquo;ve chosen datastore for the new name.</description>
+    </item>
+    
+    <item>
+      <title>CAS in action</title>
+      <link>http://example.org/post/2016-07-26-cas-in-action/</link>
+      <pubDate>Tue, 26 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-07-26-cas-in-action/</guid>
+      <description>Tough decisions Before I jump to description of the code itself, let&amp;rsquo;s first clarify what technology I&amp;rsquo;ll be using to write Cinode prototype. I decided to use golang. I find it rather nice to work with but it also has some thorns here and there. Why would I like to use it then? It turns out to be very practical, especially in the field of network services. Goroutines are just great - no need to think in terms of callbacks anymore, just straight, sequential code.</description>
+    </item>
+    
+    <item>
+      <title>Password please</title>
+      <link>http://example.org/post/2016-06-18-password-please/</link>
+      <pubDate>Sat, 18 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-06-18-password-please/</guid>
+      <description>Good Keys, bad keys When using encryption, good encryption keys are essential. They must be generated randomly and must contain enough entropy. Otherwise we&amp;rsquo;ll open wide range of attacks on encrypted data. In addition to the key, we also need Initialization Vector (IV) which doesn&amp;rsquo;t necessarily have to be secret, but still it should be either pseudorandom or (in case of some encryption primitives) just unique when used together with the same key (IV is then also called a nonce).</description>
+    </item>
+    
+    <item>
+      <title>Static base</title>
+      <link>http://example.org/post/2016-06-11-static-base/</link>
+      <pubDate>Sat, 11 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-06-11-static-base/</guid>
+      <description>Let&amp;rsquo;s talk about blobs Computers understand bits, bits form bytes. Bytes can be ordered into sequence: we end up having blocks of data, blobs. We store them in various places. Running program will need some data inside memory, other part of it will be saved on disk. Some data will be downloaded from servers, CPU will keep some blobs inside it&amp;rsquo;s cache. We can put dozens of examples here, but what this shows is that being so fundamental in computer science, proper data blob management is the key to good application environment.</description>
+    </item>
+    
+  </channel>
+</rss>

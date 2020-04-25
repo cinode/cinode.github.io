@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>programming on Cinode dev blog</title>
+    <link>http://example.org/tags/programming/</link>
+    <description>Recent content in programming on Cinode dev blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 Sep 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://example.org/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Trust noone</title>
+      <link>http://example.org/post/2016-09-27-trust-noone/</link>
+      <pubDate>Tue, 27 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-09-27-trust-noone/</guid>
+      <description>Where things went wrong? Let&amp;rsquo;s solve the &amp;ldquo;puzzle&amp;rdquo; from last post, shall we?
+The issue was with the trust level. The code basically assumed that the storage layer, being a memory, filessytem or a remote web server, is trustworthy. When the data was read back from datastore, the code didn&amp;rsquo;t check whether it&amp;rsquo;s correct or not. And from the design point of view we know that the data must perfectly match the name of blob we asked for.</description>
+    </item>
+    
+    <item>
+      <title>Encrypt &#39;em all</title>
+      <link>http://example.org/post/2016-09-12-encrypt-em-all/</link>
+      <pubDate>Mon, 12 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-09-12-encrypt-em-all/</guid>
+      <description>Another step in the implementation journey This time we&amp;rsquo;ll take a look at the implementation of blob encryption layer. Just before we start I give you one puzzle to solve - there&amp;rsquo;s one serious security flow in current implementation. I wonder if you&amp;rsquo;ll be able to spot it. I plan to show and fix it in the next post.
+General idea Blob encryption will be another layer of code, separate from the fist one - datastore.</description>
+    </item>
+    
+    <item>
+      <title>Refactoring mistakes</title>
+      <link>http://example.org/post/2016-08-08-refactoring-mistakes/</link>
+      <pubDate>Mon, 08 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-08-08-refactoring-mistakes/</guid>
+      <description>Mistake? What mistake? So far we&amp;rsquo;ve implemented CAS layer. It already looks pretty nice and has high test coverage. But I made one small mistake there. Athough CAS is currently doing what it&amp;rsquo;s supposed to do, it will have to be extended later to gain a bit of dynamic features. Using CAS name for such extended module would be misleading. That&amp;rsquo;s why it has to be renamed.
+I&amp;rsquo;ve chosen datastore for the new name.</description>
+    </item>
+    
+    <item>
+      <title>CAS in action</title>
+      <link>http://example.org/post/2016-07-26-cas-in-action/</link>
+      <pubDate>Tue, 26 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2016-07-26-cas-in-action/</guid>
+      <description>Tough decisions Before I jump to description of the code itself, let&amp;rsquo;s first clarify what technology I&amp;rsquo;ll be using to write Cinode prototype. I decided to use golang. I find it rather nice to work with but it also has some thorns here and there. Why would I like to use it then? It turns out to be very practical, especially in the field of network services. Goroutines are just great - no need to think in terms of callbacks anymore, just straight, sequential code.</description>
+    </item>
+    
+  </channel>
+</rss>
