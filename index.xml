@@ -6,10 +6,21 @@
     <description>Recent content on Cinode dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 03 Oct 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2020 20:54:19 +0200</lastBuildDate>
     
 	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Back to Work</title>
+      <link>http://example.org/post/2020-05-20-back-to-work/</link>
+      <pubDate>Wed, 20 May 2020 20:54:19 +0200</pubDate>
+      
+      <guid>http://example.org/post/2020-05-20-back-to-work/</guid>
+      <description>It has been a bit longer than I thought. My last post ended up with the &amp;ldquo;see you soon&amp;rdquo; phrase&amp;hellip; Well, that is not the &amp;ldquo;soon&amp;rdquo; I usually mean when saying that. Thus here is my apology to whoever could have waited for the new content.
+Let&amp;rsquo;s see if I could get back for a bit longer this time ;)
+What has happened? Why I did stop? Well, no surprise - &amp;ldquo;usual&amp;rdquo; life stuff, not enough time spent with family, new job, focusing on other things&amp;hellip;</description>
+    </item>
     
     <item>
       <title>We need trees, we need graphs</title>
