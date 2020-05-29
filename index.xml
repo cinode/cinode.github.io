@@ -6,10 +6,20 @@
     <description>Recent content on Cinode dev blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 20 May 2020 20:54:19 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2020 20:54:19 +0200</lastBuildDate>
     
 	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cinode goes live</title>
+      <link>http://example.org/post/2020-05-27-cinode-goes-live/</link>
+      <pubDate>Wed, 27 May 2020 20:54:19 +0200</pubDate>
+      
+      <guid>http://example.org/post/2020-05-27-cinode-goes-live/</guid>
+      <description>One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.
+What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&amp;rsquo;s compiled using hugo and the result can easily be served using a simple web server such as apache or nginx.</description>
+    </item>
     
     <item>
       <title>Back to Work</title>

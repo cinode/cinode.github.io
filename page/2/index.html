@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://example.org/" />
 
-<meta property="og:updated_time" content="2016-07-26T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2016-08-08T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Cinode dev blog">
 <meta itemprop="description" content="Cinode development blog">
@@ -113,6 +113,26 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/2016-08-08-refactoring-mistakes/">Refactoring mistakes</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2016-08-08 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Mistake? What mistake? So far we&rsquo;ve implemented CAS layer. It already looks pretty nice and has high test coverage. But I made one small mistake there. Athough CAS is currently doing what it&rsquo;s supposed to do, it will have to be extended later to gain a bit of dynamic features. Using CAS name for such extended module would be misleading. That&rsquo;s why it has to be renamed.
+I&rsquo;ve chosen datastore for the new name.
+    </div>
+    <div class="read-more">
+      <a href="/post/2016-08-08-refactoring-mistakes/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/2016-07-26-cas-in-action/">CAS in action</a></h1>

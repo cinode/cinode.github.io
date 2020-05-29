@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Cinode goes live - Cinode dev blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="BYO" /><meta name="description" content="One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.
+What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&amp;rsquo;s compiled using hugo and the result can easily be served using a simple web server such as apache or nginx." /><meta name="keywords" content="Cinode, privacy, secrecy, decentralized, distributed" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.54.0 with theme even" />
+
+
+<link rel="canonical" href="http://example.org/post/2020-05-27-cinode-goes-live/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Cinode goes live" />
+<meta property="og:description" content="One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.
+What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&rsquo;s compiled using hugo and the result can easily be served using a simple web server such as apache or nginx." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/post/2020-05-27-cinode-goes-live/" />
+<meta property="article:published_time" content="2020-05-27T20:54:19&#43;02:00"/>
+<meta property="article:modified_time" content="2020-05-27T20:54:19&#43;02:00"/>
+
+<meta itemprop="name" content="Cinode goes live">
+<meta itemprop="description" content="One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.
+What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&rsquo;s compiled using hugo and the result can easily be served using a simple web server such as apache or nginx.">
+
+
+<meta itemprop="datePublished" content="2020-05-27T20:54:19&#43;02:00" />
+<meta itemprop="dateModified" content="2020-05-27T20:54:19&#43;02:00" />
+<meta itemprop="wordCount" content="1463">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cinode goes live"/>
+<meta name="twitter:description" content="One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.
+What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&rsquo;s compiled using hugo and the result can easily be served using a simple web server such as apache or nginx."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Cinode</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Cinode</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Cinode goes live</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-27 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#live-cinode-the-goal">Live cinode - the goal</a></li>
+<li><a href="#structure-of-directories">Structure of directories</a></li>
+<li><a href="#building-up-the-datastore">Building up the datastore</a></li>
+<li><a href="#serving-content-from-datastore">Serving content from datastore</a></li>
+<li><a href="#live-in-action">Live in action</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>One of the rules I did set in the previous post was to practically test the theory that is forming here. Thus it is high time to make use of what has been said so far before moving forward.</p>
+
+<p>What I have discussed so far can perfectly fit into static web page where every page consists of rarely changing blobs of data. An example of such page is this blog - it&rsquo;s compiled using <a href="https://gohugo.io">hugo</a> and the result can easily be served using a simple web server such as <a href="https://httpd.apache.org">apache</a> or <a href="https://nginx.org">nginx</a>.</p>
+
+<p>Since the data compiles down to a static set of files, it can be stored in a form of datastore with encrypted content.</p>
+
+<h1 id="live-cinode-the-goal">Live cinode - the goal</h1>
+
+<p>The goal is to do the following:</p>
+
+<ol>
+<li>Compile the blog into a static web site</li>
+<li>Convert the plain web page to an encrypted datastore</li>
+<li>Exposed the result through a simple web server that can read and decrypt the datastore</li>
+</ol>
+
+<p>Of course there&rsquo;s a lot of small details which I will not focus on right now. All is done with <a href="https://www.docker.com">docker</a> containers, built through <a href="https://docs.gitlab.com/ce/ci/">gitlab-ci</a>, deployed using <a href="https://skaffold.dev">skaffold</a> and <a href="https://kubernetes.io">kubernetes</a> and finally there&rsquo;s a <a href="https://www.cloudflare.com">cloudflare</a> proxy in front of the web server (to ensure the server doesn&rsquo;t die from some trivial DOS attack). But to keep things focused let me skip those in this post.</p>
+
+<h1 id="structure-of-directories">Structure of directories</h1>
+
+<p>The web page consists of two types of objects - files and directories. Files are pretty simple - those are simple streams of bytes with extra properties such as mime type. Directories are a bit more complex - their content must be interpreted by the web server and thus some data structure that can list directory entries is needed.</p>
+
+<p>My first attempt used some simple hand-written serialization format. However after thinking about this I decided to use an existing well-established serialization method - <a href="https://github.com/protocolbuffers/protobuf">protobuf</a>. It is efficient, extensible and well-tested in mission-critical servers thus it is a perfect fit for cinode.</p>
+
+<p>The definition of a directory structure can be found <a href="https://github.com/cinode/go/blob/v2020-05-29/structure/directory.proto">here</a>. It&rsquo;s really trivial so let&rsquo;s bring it here:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-proto" data-lang="proto"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-proto" data-lang="proto"><span class="n">syntax</span> <span class="o">=</span> <span class="s">&#34;proto3&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">option</span> <span class="n">go_package</span> <span class="o">=</span> <span class="s">&#34;.;structure&#34;</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="c1">// Directory represents a content of a static directory
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">Directory</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>    <span class="kd">message</span> <span class="nc">Entry</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>        <span class="kt">string</span> <span class="n">bid</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>        <span class="kt">string</span> <span class="n">key</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>        <span class="kt">string</span> <span class="n">mimeType</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span><span class="err"></span>    <span class="p">}</span><span class="err">
+</span><span class="err"></span>    <span class="n">map</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">Entry</span><span class="p">&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Each directory consists of a map of entries where the key is the name of the file and the the value contains the blob id, the decryption key and the content type of given entry. Because this data structure is encoded using <a href="https://github.com/protocolbuffers/protobuf">protobuf</a> it can be easily extended to handle more complex scenarios.</p>
+
+<h1 id="building-up-the-datastore">Building up the datastore</h1>
+
+<p>Server does need an existing datastore to serve the data. Most of the machinery to create an encrypted datastore is already there, built in previous steps. What&rsquo;s missing is a tool that brings everything together. The heart of <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go">the compiler code</a> is as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">compileOneLevel</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">be</span> <span class="nx">blenc</span><span class="p">.</span><span class="nx">BE</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">st</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Couldn&#39;t check path: %w&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">st</span><span class="p">.</span><span class="nf">IsDir</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nf">compileDir</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">be</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">st</span><span class="p">.</span><span class="nf">Mode</span><span class="p">().</span><span class="nf">IsRegular</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nf">compileFile</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="nx">be</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Neither dir nor a regular file: %v&#34;</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">compileFile</span><span class="p">(</span><span class="nx">path</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">be</span> <span class="nx">blenc</span><span class="p">.</span><span class="nx">BE</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34; *&#34;</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+	<span class="nx">fl</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Couldn&#39;t read file %v: %w&#34;</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">be</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="nx">fl</span><span class="p">,</span> <span class="nx">blenc</span><span class="p">.</span><span class="nf">ContentsHashKey</span><span class="p">())</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">compileDir</span><span class="p">(</span><span class="nx">p</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">be</span> <span class="nx">blenc</span><span class="p">.</span><span class="nx">BE</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">fileList</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadDir</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Couldn&#39;t read contents of dir %v: %w&#34;</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">dirStruct</span> <span class="o">:=</span> <span class="nx">structure</span><span class="p">.</span><span class="nx">Directory</span><span class="p">{</span>
+		<span class="nx">Entries</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">structure</span><span class="p">.</span><span class="nx">Directory_Entry</span><span class="p">),</span>
+	<span class="p">}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">fileList</span> <span class="p">{</span>
+		<span class="nx">subPath</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Name</span><span class="p">())</span>
+		<span class="nx">name</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">compileOneLevel</span><span class="p">(</span><span class="nx">subPath</span><span class="p">,</span> <span class="nx">be</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="nx">contentType</span> <span class="o">:=</span> <span class="s">&#34;application/cinode-dir&#34;</span>
+		<span class="k">if</span> <span class="p">!</span><span class="nx">e</span><span class="p">.</span><span class="nf">IsDir</span><span class="p">()</span> <span class="p">{</span>
+			<span class="nx">contentType</span> <span class="p">=</span> <span class="nx">mime</span><span class="p">.</span><span class="nf">TypeByExtension</span><span class="p">(</span><span class="nx">filepath</span><span class="p">.</span><span class="nf">Ext</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">Name</span><span class="p">()))</span>
+			<span class="k">if</span> <span class="nx">contentType</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+				<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">subPath</span><span class="p">)</span>
+				<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+					<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Can not detect content type for %v: %w&#34;</span><span class="p">,</span> <span class="nx">subPath</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+				<span class="p">}</span>
+				<span class="nx">buffer</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span>
+				<span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">ReadFull</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">buffer</span><span class="p">)</span>
+				<span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+				<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">ErrUnexpectedEOF</span> <span class="p">{</span>
+					<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Can not detect content type for %v: %w&#34;</span><span class="p">,</span> <span class="nx">subPath</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+				<span class="p">}</span>
+				<span class="nx">contentType</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">DetectContentType</span><span class="p">(</span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">n</span><span class="p">])</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="nx">dirStruct</span><span class="p">.</span><span class="nx">Entries</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nf">Name</span><span class="p">()]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">structure</span><span class="p">.</span><span class="nx">Directory_Entry</span><span class="p">{</span>
+			<span class="nx">Bid</span><span class="p">:</span>      <span class="nx">name</span><span class="p">,</span>
+			<span class="nx">Key</span><span class="p">:</span>      <span class="nx">key</span><span class="p">,</span>
+			<span class="nx">MimeType</span><span class="p">:</span> <span class="nx">contentType</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">proto</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">dirStruct</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Can not serialize directory %v: %w&#34;</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">be</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="nx">ioutil</span><span class="p">.</span><span class="nf">NopCloser</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">data</span><span class="p">)),</span> <span class="nx">blenc</span><span class="p">.</span><span class="nf">ContentsHashKey</span><span class="p">())</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The algorithm is a simple recursive function: <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L80">compileOneLevel</a>. It&rsquo;s purpose is to build datastore blob for one path on a local filesystem. If the path points to a file, it&rsquo;s corresponding blob is generated in <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L97">compileFile</a>. For directories, this function calls <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L106">compileDir</a> - a bit more complex function generating datastore representation of a directory.</p>
+
+<p>Generation of blob for a directory is done by listing all its files and sub-directories <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L137">adding one datastore entry</a> per one physical location. For each entry, blob id and key is calculated through <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L116">recursive call to compileOneLevel</a>, the only thing left is the <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L122">detection of content type</a> which is equivalent to what golang&rsquo;s standard library <a href="https://github.com/golang/go/blob/0aed2a4133d4a6cbefa9f86096500009bacc8e4c/src/net/http/fs.go#L196">does</a> in the default implementation of its file server.</p>
+
+<p>The only missing peace of the puzzle is the entrypoint to the root directory. The server must somehow know where to start - needs to know the root blob id and its key. At this moment, this information is <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/compile.go#L62">stored</a> in a file called <code>entrypoint.txt</code> - it is read by the server during initialization. Of course this is just a simple workaround. Knowing the entrypoint allows decrypting whole tree stored in datastore. In the future, the entrypoint will be extracted to a separate, more secure location.</p>
+
+<h1 id="serving-content-from-datastore">Serving content from datastore</h1>
+
+<p>The initial server implementation is as simple as possible. There&rsquo;s no caching, preloading, no ability to upload the content, no access control etc. Current step is just to prove that the content can be reliably served from an enrypted datastore.</p>
+
+<p>The main function of <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L63">server&rsquo;s implementation</a> is the <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L63">handleDir</a> one:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">handleDir</span><span class="p">(</span><span class="nx">be</span> <span class="nx">blenc</span><span class="p">.</span><span class="nx">BE</span><span class="p">,</span> <span class="nx">bid</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">subPath</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="k">if</span> <span class="nx">subPath</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="nx">subPath</span> <span class="p">=</span> <span class="s">&#34;index.html&#34;</span>
+	<span class="p">}</span>
+
+	<span class="nx">pathParts</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">subPath</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+	<span class="nx">dirData</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">be</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">bid</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Internal error&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">dirBytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">dirData</span><span class="p">)</span>
+	<span class="nx">dirData</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Internal error&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">dir</span> <span class="o">:=</span> <span class="nx">structure</span><span class="p">.</span><span class="nx">Directory</span><span class="p">{}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">proto</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="nx">dirBytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">dir</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Internal error&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">entry</span><span class="p">,</span> <span class="nx">exists</span> <span class="o">:=</span> <span class="nx">dir</span><span class="p">.</span><span class="nf">GetEntries</span><span class="p">()[</span><span class="nx">pathParts</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+	<span class="k">if</span> <span class="p">!</span><span class="nx">exists</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">GetMimeType</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#34;application/cinode-dir&#34;</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">pathParts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+			<span class="nx">http</span><span class="p">.</span><span class="nf">Redirect</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="o">+</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusPermanentRedirect</span><span class="p">)</span>
+			<span class="k">return</span>
+		<span class="p">}</span>
+		<span class="nf">handleDir</span><span class="p">(</span><span class="nx">be</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">GetBid</span><span class="p">(),</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">GetKey</span><span class="p">(),</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">pathParts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">pathParts</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">1</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">be</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nf">GetBid</span><span class="p">(),</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">GetKey</span><span class="p">())</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Internal error&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">data</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="nx">w</span><span class="p">.</span><span class="nf">Header</span><span class="p">().</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;Content-Type&#34;</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nf">GetMimeType</span><span class="p">())</span>
+	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">Copy</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="c1">// TODO: Log this, can&#39;t send an error back, it&#39;s too late
+</span><span class="c1"></span>	<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>This function does <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L85">parse directory blob</a> and <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L90">tries to find</a> it&rsquo;s entry for the next part of URL path. Depending on whether the entry is a directory itself, a sub-directory <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L101">is recursively scanned</a>, otherwise the path is expected to be <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L110">a single file</a>. The only thing left to have a functional server is an internal <a href="https://github.com/cinode/go/blob/v2020-05-29/cmd/static_datastore/cmd/server.go#L66">redirection</a> of a directory listing to an <code>index.html</code> file (lack of this file will end up with a 404 response).</p>
+
+<h1 id="live-in-action">Live in action</h1>
+
+<p>To see the server in action, simply go to <a href="https://blog.cinodenet.org">https://blog.cinodenet.org</a> - the content served there is generated through cinode. There is the cloudflare proxy in front but it does not generate the content itself.</p>
+
+<p>Furthermore, the raw datastore can be viewed through <a href="https://blog-datastore.cinodenet.org">https://blog-datastore.cinodenet.org</a> address although without the decryption layer the data won&rsquo;t be of any use. Currently one can find the entrypoint file there so the whole tree can be decrypted.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">BYO</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-05-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2020-05-20-back-to-work/">
+            <span class="next-text nav-default">Back to Work</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://example.org/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2016 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">BYO</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
